@@ -14,12 +14,8 @@ int main(int argc, char **argv)
     else if (argc >= 2)
     {
         /* Input from command-line arguments */
-	    i = 0;
-        while (i != argc)
-	    {
-	    	puts(argv[i]);
-	    	i++;
-	    }
+        for (i = 0; argv[i] != NULL; i++)
+           	puts(argv[i]);
     }
     else
     {

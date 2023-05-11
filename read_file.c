@@ -25,9 +25,8 @@ char* read_lines(int fd)
 			if (buffer[i] == '\n')
 			{
 				line = realloc(line, line_length + i + 2);
-				if (line == NULL)
+				if (line == NULL) /* error from relloc */
 				{
-					perror("realloc");
 					close(fd);
 					return (NULL);
 				}
@@ -44,9 +43,8 @@ char* read_lines(int fd)
 	if (line_length > 0)
 	{
 		line = realloc(line, line_length + 1);
-		if (line == NULL)
+		if (line == NULL) /* error from relloc */
 		{
-			perror("realloc");
 			close(fd);
 			return (NULL);
 		}
