@@ -72,7 +72,11 @@ char* read_file(const char* filename)
 	return (content);
 }
 
-	
+void file_process(char **argv, char **av, char *cmd)
+{
+	size_t read;
+	int i;
+
 	cmd = read_file(argv[1]);
         /* Remove trailing newline character, if any */
         read = strlen(cmd);
@@ -84,4 +88,5 @@ char* read_file(const char* filename)
 		free(av[i]);
 
         free(av);
-	    cmd = NULL;
+	cmd = NULL;
+}

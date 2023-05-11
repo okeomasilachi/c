@@ -28,4 +28,6 @@ char **prs(char *command);
 int open_file(const char* filename);
 char* read_lines(int fd);
 char* read_file(const char* filename);
+void file_process(char **argv, char **av, char *cmd);
+
 #endif /* MAIN_H */

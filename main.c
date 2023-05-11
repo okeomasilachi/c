@@ -2,25 +2,14 @@
 
 int main(int argc, char **argv)
 {
-    char *cmd = NULL, **av;
-    size_t n = 0, read;
+    char *cmd = NULL, **av = NULL;
+    size_t n = 0;
     int i;
     
     /* Check if av[1] is a file */	
     if (argc == 2 && access(argv[1], F_OK) == 0)
     {
-        cmd = read_file(argv[1]);
-        /* Remove trailing newline character, if any */
-        read = strlen(cmd);
-	    if (read > 0 && cmd[read - 1] == '\n')
-		    cmd[read - 1] = '\0';
-
-        av = prs(cmd);
-        for (i = 0; av[i] != NULL; i++)
-		free(av[i]);
-
-        free(av);
-	    cmd = NULL;
+        file_process(argv, av, cmd);
     }
     else if (argc >= 2)
     {
