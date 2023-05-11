@@ -82,6 +82,7 @@ void file_process(char **argv, char **av, char *cmd)
 		    cmd[read - 1] = '\0';
 
         av = prs(cmd);
+	execute_command(av, environ, 0);
         for (i = 0; av[i] != NULL; i++)
 		free(av[i]);
 

@@ -29,5 +29,9 @@ int open_file(const char* filename);
 char* read_lines(int fd);
 char* read_file(const char* filename);
 void file_process(char **argv, char **av, char *cmd);
+/*--------------------------------------------------------------*/
+extern char** environ;
 
+void execute_command(char** args, char** envp, size_t n);
+char* find_executable(char *argv);
 #endif /* MAIN_H */

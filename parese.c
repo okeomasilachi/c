@@ -2,7 +2,7 @@
 
 char **prs(char *command)
 {
-	char *com_cpy = NULL, *tok, *dl = " \n";
+	char *com_cpy = NULL, *tok, *dl = " \t\n";
 	Tokenizer tokens;
 	size_t count = 0, cnt = 0;
 	char **av = NULL;
@@ -27,7 +27,6 @@ char **prs(char *command)
 		{
 			av[count] = malloc(sizeof(char) * (strlen(tok) + 1));
 			strcpy(av[count], tok);
-			puts(av[count]);
 			tok = s_tok(&tokens, dl);
 			count++;
 		}
