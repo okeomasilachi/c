@@ -71,3 +71,17 @@ char* read_file(const char* filename)
 	content = read_lines(fd);
 	return (content);
 }
+
+	
+	cmd = read_file(argv[1]);
+        /* Remove trailing newline character, if any */
+        read = strlen(cmd);
+	    if (read > 0 && cmd[read - 1] == '\n')
+		    cmd[read - 1] = '\0';
+
+        av = prs(cmd);
+        for (i = 0; av[i] != NULL; i++)
+		free(av[i]);
+
+        free(av);
+	    cmd = NULL;

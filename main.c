@@ -12,25 +12,25 @@ int main(int argc, char **argv)
         cmd = read_file(argv[1]);
         /* Remove trailing newline character, if any */
         read = strlen(cmd);
-	if (read > 0 && cmd[read - 1] == '\n')
-		cmd[read - 1] = '\0';
+	    if (read > 0 && cmd[read - 1] == '\n')
+		    cmd[read - 1] = '\0';
 
         av = prs(cmd);
         for (i = 0; av[i] != NULL; i++)
 		free(av[i]);
 
         free(av);
-	cmd = NULL;
+	    cmd = NULL;
     }
     else if (argc >= 2)
     {
         /* Input from command-line arguments */
-	i = 0;
-        while (argv[i] != NULL)
-	{
-		puts(argv[i]);
-		i++;
-	}
+	    i = 0;
+        while (i != argc)
+	    {
+	    	puts(argv[i]);
+	    	i++;
+	    }
     }
     else
     {
