@@ -2,7 +2,7 @@
 
 char **prs(char *command)
 {
-	char *com_cpy = NULL, *tok, *dl = " \t\n";
+	char *com_cpy = NULL, *tok, *dl = " \t\n\r";
 	Tokenizer tokens;
 	size_t count = 0, cnt = 0;
 	char **av = NULL;

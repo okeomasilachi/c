@@ -38,4 +38,17 @@ extern char** environ;
 void execute_command(char** args, char** envp, size_t n, char *Name, int argc);
 char* find_executable(char *argv);
 int is_executable(char *argv);
+/*---------------------------------------------------------------*/
+struct built_in
+{
+    char *command;
+    void (*func)(char **args);
+};
+
+void exit_func(char **args);
+void _cd(char **args);
+void _setenv(char **args);
+void _unsetenv(char **args);
+int num_B_in();
+
 #endif /* MAIN_H */

@@ -1,5 +1,12 @@
 #include "main.h"
 
+struct built_in b_s[] = {
+    {"exit", exit_func},
+    {"cd", _cd},
+    {"setenv", _setenv},
+    {"unsetenv", _unsetenv},
+};
+
 char* find_executable(char *argv)
 {
 	char *path_env, *path_copy, *token, *executable_path;
@@ -42,8 +49,16 @@ void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
 {
 	char *ec;
     pid_t child_pid;
-    int status;
+    int status, i;
+
     /*Execute the command by calling execve()*/
+    for (i = 0; i < num_B_in(); i++)
+    {
+        if (strcmp(args[0], b_s[i].command) == 0)
+        {
+            b_s->func(args);
+        }
+    }
     ec = find_executable(args[n]);
     if (ec == NULL)
     {
@@ -67,4 +82,51 @@ void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
             waitpid(child_pid, &status, 0);
         }
     }
+}
+
+int num_B_in()
+{
+	return (sizeof(b_s) / sizeof(struct built_in));
+}
+
+void exit_func(char **args)
+{
+	if (args[1] == NULL)
+	{
+		exit(EXIT_SUCCESS);
+	}
+	else if (args[1] != NULL)
+	{
+		exit(atoi(args[1]));
+	}
+}
+
+void _cd(char **args)
+{
+	const char *home = getenv("HOME");
+
+    if (args[1] == NULL)
+    {
+        if (home == NULL)
+            dprintf(STDERR_FILENO, "cd: Home directory not found\n");
+
+        if (home)
+            chdir(home);
+    }
+    else
+    {
+        chdir(args[1]);
+    }
+}
+
+void _setenv(char **args)
+{
+    if (args[1] != NULL && args[2] != NULL)
+        setenv(args[1], args[2], 1);
+}
+
+void _unsetenv(char **args)
+{
+    if (args[1] != NULL)
+        unsetenv(args[1]);
 }

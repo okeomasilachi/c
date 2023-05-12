@@ -6,7 +6,6 @@ int main(int argc, char **argv)
     size_t n = 0;
     ssize_t br = 0;
     int i;
-
     
     /* Check if av[1] is a file */	
     if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], X_OK) != 0)
@@ -25,18 +24,13 @@ int main(int argc, char **argv)
         {
             printf("$ ");
             br = getline(&cmd, &n, stdin);
-
             if (br == EOF) 
             {
                 putchar('\n');
                 break;
             }
             if (cmd[0] == '\n') continue;
-
             av = prs(cmd);
-            if ((i = strcmp(av[0],"exit")) == 0)
-                break;
-            
             execute_command(av, environ, 0, Name, argc);
             for (i = 0; av[i] != NULL; i++)
                 free(av[i]);
