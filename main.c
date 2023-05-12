@@ -2,20 +2,21 @@
 
 int main(int argc, char **argv)
 {
-    char *cmd = NULL, **av = NULL;
+    char *cmd = NULL, **av = NULL, *Name = argv[0];
     size_t n = 0;
     ssize_t br = 0;
     int i;
+
     
     /* Check if av[1] is a file */	
-    if (argc == 2 && access(argv[1], F_OK) == 0 && argv[3] != NULL)
+    /*if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], X_OK) != 0)
     {
-        file_process(argv, av, cmd);
-    }
-    else if (argv[1] != NULL)
+        file_process(argv, av, cmd, Name, argc);
+    }*/
+    if (is_executable(argv[1]) == 1)
     {
         /* Input from command-line arguments */
-        execute_command(argv, environ, 1);
+        execute_command(argv, environ, 1, Name, argc);
     }
     else
     {
@@ -25,10 +26,10 @@ int main(int argc, char **argv)
             printf("$ ");
             br = getline(&cmd, &n, stdin);
             if (br == -1 || cmd[0] == '\n')
-                break;
+                continue;
 
             av = prs(cmd);
-            execute_command(av, environ, 0);
+            execute_command(av, environ, 0, Name, argc);
             for (i = 0; av[i] != NULL; i++)
                 free(av[i]);
 

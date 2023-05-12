@@ -38,19 +38,33 @@ char* find_executable(char *argv)
 }
 
 
-void execute_command(char** args, char** envp, size_t n)
+void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
 {
 	char *ec;
+    pid_t child_pid;
+    int status;
     /*Execute the command by calling execve()*/
     ec = find_executable(args[n]);
     if (ec == NULL)
     {
-	dprintf(STDERR_FILENO, "Error: %s : No such command", args[n]);
+	    dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, args[n]);
     }
     else
     {
-    	execve(ec, args, envp);
-    	perror("Command execution failed");
-    	exit(EXIT_FAILURE);
+        child_pid = fork();
+        if (child_pid == -1)
+        {
+            perror("Error:");
+        }
+        if (child_pid == 0)
+        {
+            execve(ec, args, envp);
+    	    perror("Command execution failed");
+    	    exit(EXIT_FAILURE);
+        }
+        else
+        {
+            waitpid(child_pid, &status, 0);
+        }
     }
 }

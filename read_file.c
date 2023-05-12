@@ -70,7 +70,7 @@ char* read_file(const char* filename)
 	return (content);
 }
 
-void file_process(char **argv, char **av, char *cmd)
+void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 {
 	size_t read;
 	int i;
@@ -82,10 +82,28 @@ void file_process(char **argv, char **av, char *cmd)
 		    cmd[read - 1] = '\0';
 
         av = prs(cmd);
-	execute_command(av, environ, 0);
+	execute_command(av, environ, 0, Name, argc);
         for (i = 0; av[i] != NULL; i++)
 		free(av[i]);
 
         free(av);
 	cmd = NULL;
+}
+
+int is_executable(char *argv) {
+    struct stat st;
+    char *path;
+
+    /* Get file status */
+    path = find_executable(argv);
+    if (stat(path, &st) == -1) {
+        perror("Failed to get file status");
+        return 0;
+    }
+
+    /* Check if the file is executable */
+    if (st.st_mode & S_IXUSR)
+        return 1;
+
+    return 0;
 }

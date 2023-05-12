@@ -8,6 +8,9 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdbool.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define BUFFER_SIZE 1024
 
@@ -28,10 +31,11 @@ char **prs(char *command);
 int open_file(const char* filename);
 char* read_lines(int fd);
 char* read_file(const char* filename);
-void file_process(char **argv, char **av, char *cmd);
+void file_process(char **argv, char **av, char *cmd, char *Name, int argc);
 /*--------------------------------------------------------------*/
 extern char** environ;
 
-void execute_command(char** args, char** envp, size_t n);
+void execute_command(char** args, char** envp, size_t n, char *Name, int argc);
 char* find_executable(char *argv);
+int is_executable(char *argv);
 #endif /* MAIN_H */
