@@ -18,7 +18,7 @@ else
 {
         /* Input from command-line arguments */
 
-void reallocate(args, av, argc);
+reallocate(args, av, argc);
 execute_command(av, environ, 0, Name, argc);
 for (i = 0; av[i] != NULL; i++)
                 free(av[i]);
