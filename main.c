@@ -17,7 +17,12 @@ if (access(argv[1], F-OK) == 0 && access(argv[1], X_OK) != 0)
 else
 {
         /* Input from command-line arguments */
-        execute_command(argv, environ, 1, Name, argc);
+
+void reallocate(args, av, argc);        execute_command(av, environ, 0, Name, argc);
+for (i = 0; av[i] != NULL; i++)
+                free(av[i]);
+
+            free(av);
 }
     }
     else
