@@ -1,11 +1,7 @@
 #include "main.h"
+#include "built-in.h"
 
-struct built_in b_s[] = {
-    {"exit", exit_func},
-    {"cd", _cd},
-    {"setenv", _setenv},
-    {"unsetenv", _unsetenv},
-};
+
 
 char* find_executable(char *argv)
 {
