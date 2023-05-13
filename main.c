@@ -10,21 +10,20 @@ int main(int argc, char **argv)
     /* Check if av[1] is a file */	
     if (argc >= 2)
     {
-if (access(argv[1], F-OK) == 0 && access(argv[1], X_OK) != 0)
-{
-        file_process(argv, av, cmd, Name, argc);
-}
-else
-{
-        /* Input from command-line arguments */
+	if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], X_OK) != 0)
+	{
+	        file_process(argv, av, cmd, Name, argc);
+	}
+	/*else
+	{
+	        Input from command-line arguments 
+		reallocate(argv, av, argc);
+		execute_command(av, environ, 0, Name, argc);
+		for (i = 0; av[i] != NULL; i++)
+	        	free(av[i]);
 
-reallocate(args, av, argc);
-execute_command(av, environ, 0, Name, argc);
-for (i = 0; av[i] != NULL; i++)
-                free(av[i]);
-
-            free(av);
-}
+		free(av);
+	}*/
     }
     else
     {

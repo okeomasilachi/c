@@ -1,6 +1,5 @@
 
-ls -l
-pwd
-clear 
 
-exit
+
+		     ls -l
+		     

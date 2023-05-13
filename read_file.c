@@ -16,14 +16,28 @@ char* read_lines(int fd)
 {
 	char *line = NULL, buffer[BUFFER_SIZE];
 	ssize_t bytes_read, i, line_length = 0;
+	int leading_space = 1; /* tracing leading space in a file */
 	
 	bytes_read = read(fd, buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
 		for (i = 0; i < bytes_read; i++)
 		{
+			if (leading_space && (isspace(buffer[i]) || buffer[i] == '\n' || buffer[i] == '\t'))
+			{
+				continue;
+			}
+			else
+			{
+				leading_space = 0;
+			}
 			if (buffer[i] == '\n')
 			{
+				if (leading_space)
+				{
+					line_length -= i;
+					continue;
+				}
 				line = realloc(line, line_length + i + 2);
 				if (line == NULL) /* error from relloc */
 				{
@@ -39,6 +53,7 @@ char* read_lines(int fd)
 			}
 		}
 		line_length += bytes_read;
+		bytes_read = read(fd, buffer, sizeof(buffer));
 	}
 	if (line_length > 0)
 	{
@@ -78,8 +93,10 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 	cmd = read_file(argv[1]);
         /* Remove trailing newline character, if any */
         read = strlen(cmd);
-	    if (read > 0 && cmd[read - 1] == '\n')
-		    cmd[read - 1] = '\0';
+
+	
+	if (read > 0 && cmd[read - 1] == '\n')
+		cmd[read - 1] = '\0';
 
         av = prs(cmd);
 	execute_command(av, environ, 0, Name, argc);
