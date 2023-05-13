@@ -8,14 +8,17 @@ int main(int argc, char **argv)
     int i;
     
     /* Check if av[1] is a file */	
-    if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], F_OK) != 0)
+    if (argc >= 2)
     {
+if (access(argv[1], F-OK) == 0 && access(argv[1], X_OK) != 0)
+{
         file_process(argv, av, cmd, Name, argc);
-    }
-    else if (access(argv[1], X_OK) == 0 && find_executable(argv[1]) != NULL)
-    {
+}
+else
+{
         /* Input from command-line arguments */
         execute_command(argv, environ, 1, Name, argc);
+}
     }
     else
     {
