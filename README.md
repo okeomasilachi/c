@@ -1,1 +1,5 @@
-# shell practice
+# Simple Shell
+## Usage
+## Builtins
+## Compilation 
+
