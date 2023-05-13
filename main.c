@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     {
         file_process(argv, av, cmd, Name, argc);
     }
-    else if (access(argv[1], X_OK) == 0)
+    else if (access(argv[1], X_OK) == 0 && find_executable(argv[1]) != NULL)
     {
         /* Input from command-line arguments */
         execute_command(argv, environ, 1, Name, argc);
