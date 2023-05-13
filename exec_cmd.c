@@ -51,14 +51,15 @@ void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
     pid_t child_pid;
     int status, i;
 
+    (void)i;
     /*Execute the command by calling execve()*/
-    for (i = 0; i < num_B_in(); i++)
+    /*for (i = 0; i < num_B_in(); i++)
     {
         if (strcmp(args[0], b_s[i].command) == 0)
         {
             b_s->func(args);
         }
-    }
+    }*/
     ec = find_executable(args[n]);
     if (ec == NULL)
     {

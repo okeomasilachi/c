@@ -14,16 +14,17 @@ int main(int argc, char **argv)
 	{
 	        file_process(argv, av, cmd, Name, argc);
 	}
-	/*else
+	else
 	{
-	        Input from command-line arguments 
+	        /*Input from command-line arguments*/
 		reallocate(argv, av, argc);
 		execute_command(av, environ, 0, Name, argc);
 		for (i = 0; av[i] != NULL; i++)
+		{
 	        	free(av[i]);
-
+		}
 		free(av);
-	}*/
+	}
     }
     else
     {

@@ -1,5 +1,4 @@
 
 
 
-		     ls -l
-		     
+		     clear

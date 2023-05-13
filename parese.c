@@ -41,15 +41,21 @@ char **prs(char *command)
 
 void reallocate(char **args, char **av, int argc)
 {
-	int i = 1;
+	int i;
 	
+	for (i = 0; av[i] != NULL; i++)
+	{
+		free(av[i]);
+	}
+	free(av);
+
 	av = malloc(sizeof(char *) * argc);
-	
+	i = 1;
 	while (args[i] != NULL)
 	{
-		av[i - 1] = malloc(sizeof(char) * strlen(args[i]));
+		av[i - 1] = malloc(sizeof(char) * strlen(args[i]) + 1);
 		strcpy(av[i - 1], args[i]);
 		i++;
 	}
-	av[argc - 1] = NULL;
+	av[i - 1] = NULL;
 }
