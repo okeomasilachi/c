@@ -89,21 +89,3 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
         free(av);
 	cmd = NULL;
 }
-
-int is_executable(char *argv) {
-    struct stat st;
-    char *path;
-
-    /* Get file status */
-    path = find_executable(argv);
-    if (stat(path, &st) == -1) {
-        perror("Failed to get file status");
-        return 0;
-    }
-
-    /* Check if the file is executable */
-    if (st.st_mode & S_IXUSR)
-        return 1;
-
-    return 0;
-}
