@@ -37,3 +37,17 @@ char **prs(char *command)
 	}
 	return (av);
 }
+
+
+void reallocate(char **args, char **av, int argc)
+{
+size_t i = 1;
+
+av = malloc(sizeof(char *) * argc);
+while (args[i] != NULL)
+{
+av[i - 1] = strdup(args[i]);
+i++;
+}
+av[i - 1] = NULL;
+}
