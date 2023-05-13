@@ -27,6 +27,7 @@ typedef struct {
 void f_tokenizer(Tokenizer *tokenizer, char *input_string);
 char *s_tok(Tokenizer *tokenizer, const char *delimiters);
 char **prs(char *command);
+void reallocate(char **args, char **av, int argc);
 /*--------------------------------------------------------------*/
 int open_file(const char* filename);
 char* read_lines(int fd);
