@@ -8,7 +8,7 @@ int main(int argc, char **argv)
     int i;
     
     /* Check if av[1] is a file */	
-    if (argc >= 2)
+    if (argc > 1)
     {
 	if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], X_OK) != 0)
 	{
@@ -16,14 +16,17 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-	        /*Input from command-line arguments*/
-		reallocate(argv, av, argc);
-		execute_command(av, environ, 0, Name, argc);
-		for (i = 0; av[i] != NULL; i++)
-		{
-	        	free(av[i]);
-		}
-		free(av);
+        char *com = argv[1];
+        char *args[11];
+        int arg_c = 0;
+
+        for (i = 1; i < argc; i++)
+        {
+            args[arg_c++] = argv[i];
+        }
+        args[arg_c] = NULL;
+
+        exec_command(args, environ, com, Name, argc);
 	}
     }
     else

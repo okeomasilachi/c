@@ -85,6 +85,47 @@ void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
     }
 }
 
+void exec_command(char** args, char** envp, char *arg, char *Name, int argc)
+{
+	char *ec;
+    pid_t child_pid;
+    int status, i;
+
+    (void)i;
+    /*Execute the command by calling execve()*/
+    /*for (i = 0; i < num_B_in(); i++)
+    {
+        if (strcmp(args[0], b_s[i].command) == 0)
+        {
+            b_s->func(args);
+        }
+    }*/
+    ec = find_executable(arg);
+    if (ec == NULL)
+    {
+	    dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, arg);
+    }
+    else
+    {
+        child_pid = fork();
+        if (child_pid == -1)
+        {
+            perror("Error:");
+        }
+        if (child_pid == 0)
+        {
+            execve(ec, args, envp);
+    	    perror("Command execution failed");
+    	    exit(EXIT_FAILURE);
+        }
+        else
+        {
+            waitpid(child_pid, &status, 0);
+            exit(EXIT_SUCCESS);
+        }
+    }
+}
+
 int num_B_in()
 {
 	return (sizeof(b_s) / sizeof(struct built_in));

@@ -38,6 +38,7 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc);
 extern char** environ;
 
 void execute_command(char** args, char** envp, size_t n, char *Name, int argc);
+void exec_command(char** args, char** envp, char *arg, char *Name, int argc);
 char* find_executable(char *argv);
 int is_executable(char *argv);
 /*---------------------------------------------------------------*/
