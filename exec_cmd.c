@@ -92,14 +92,6 @@ void exec_command(char** args, char** envp, char *arg, char *Name, int argc)
     int status, i;
 
     (void)i;
-    /*Execute the command by calling execve()*/
-    /*for (i = 0; i < num_B_in(); i++)
-    {
-        if (strcmp(args[0], b_s[i].command) == 0)
-        {
-            b_s->func(args);
-        }
-    }*/
     ec = find_executable(arg);
     if (ec == NULL)
     {
