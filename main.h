@@ -57,6 +57,4 @@ struct built_in
 
 /*--------------------------------------------------------------------------*/
 
-void tokenize_input(char* input, char** tokens, const char* delimiter);
-
 #endif /* MAIN_H */

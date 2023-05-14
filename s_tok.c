@@ -38,17 +38,3 @@ char *s_tok(o_tok *tokenizer, const char *delimiters) {
     tokenizer->cur_tok_st = tokenizer->nxt_tok_st;
     return token;
 }
-
-void tokenize_input(char* input, char** tokens, const char* delimiter) {
-    char* token = strtok(input, delimiter);
-    int token_count = 0;
-
-    while (token != NULL) {
-        tokens[token_count] = token;
-        token_count++;
-
-        token = strtok(NULL, delimiter);
-    }
-
-    tokens[token_count] = NULL;  /* Set the last element to NULL */
-}
