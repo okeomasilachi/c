@@ -1,12 +1,5 @@
 #include "main.h"
 
-struct built_in b_s[] = {
-    {"exit", exit_func},
-    {"cd", _cd},
-    {"setenv", _setenv},
-    {"unsetenv", _unsetenv},
-};
-
 char* find_executable(char *argv)
 {
 	char *path_env, *path_copy, *token, *executable_path;
@@ -49,17 +42,8 @@ void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
 {
 	char *ec;
     pid_t child_pid;
-    int status, i;
-
-    (void)i;
-    /*Execute the command by calling execve()*/
-    /*for (i = 0; i < num_B_in(); i++)
-    {
-        if (strcmp(args[0], b_s[i].command) == 0)
-        {
-            b_s->func(args);
-        }
-    }*/
+    int status;
+    
     ec = find_executable(args[n]);
     if (ec == NULL)
     {
@@ -89,9 +73,8 @@ void exec_command(char** args, char** envp, char *arg, char *Name, int argc)
 {
 	char *ec;
     pid_t child_pid;
-    int status, i;
-
-    (void)i;
+    int status;
+    
     ec = find_executable(arg);
     if (ec == NULL)
     {
@@ -113,12 +96,13 @@ void exec_command(char** args, char** envp, char *arg, char *Name, int argc)
         else
         {
             waitpid(child_pid, &status, 0);
-            exit(EXIT_SUCCESS);
+            return;
+            /*exit(EXIT_SUCCESS);*/
         }
     }
 }
 
-int num_B_in()
+/*int num_B_in()
 {
 	return (sizeof(b_s) / sizeof(struct built_in));
 }
@@ -164,3 +148,4 @@ void _unsetenv(char **args)
     if (args[1] != NULL)
         unsetenv(args[1]);
 }
+*/

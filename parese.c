@@ -38,24 +38,74 @@ char **prs(char *command)
 	return (av);
 }
 
+struct built_in built_in_commands[] = {
+    {"cd", cd_command},
+    {"exit", exit_command},
+    {"setenv", setenv_command},
+    {"unsetenv", unsetenv_command},
+    {"help", help_command},
+};
 
-void reallocate(char **args, char **av, int argc)
-{
-	int i;
-	
-	for (i = 0; av[i] != NULL; i++)
-	{
-		free(av[i]);
-	}
-	free(av);
+/* Implementations of built-in commands */
+void cd_command(char** args) {
+    if (args[1] == NULL) {
+        fprintf(stderr, "cd: missing argument\n");
+    } else {
+        if (chdir(args[1]) != 0) {
+            perror("cd");
+        }
+    }
+}
 
-	av = malloc(sizeof(char *) * argc);
-	i = 1;
-	while (args[i] != NULL)
-	{
-		av[i - 1] = malloc(sizeof(char) * strlen(args[i]) + 1);
-		strcpy(av[i - 1], args[i]);
-		i++;
-	}
-	av[i - 1] = NULL;
+void exit_command(char** args) {
+    if (args[1] == NULL)
+    {
+	exit(EXIT_SUCCESS);
+    }
+    else if (args[1] != NULL)
+    {
+	exit(atoi(args[1]));
+    }
+}
+
+void setenv_command(char** args) {
+    if (args[1] == NULL || args[2] == NULL) {
+        fprintf(stderr, "setenv: missing argument\n");
+    } else {
+        if (setenv(args[1], args[2], 1) != 0) {
+            perror("setenv");
+        }
+    }
+}
+
+void unsetenv_command(char** args) {
+    if (args[1] == NULL) {
+        fprintf(stderr, "unsetenv: missing argument\n");
+    } else {
+        if (unsetenv(args[1]) != 0) {
+            perror("unsetenv");
+        }
+    }
+}
+
+void help_command(char** args) {
+
+    if (args[1] == NULL)
+    {
+	printf("Help command implementation\n");
+    }
+}
+
+/* Execute the built-in command */
+int execute_builtin_command(char** args) {
+    int num_built_in_commands = sizeof(built_in_commands) / sizeof(struct built_in), i;
+
+    for (i = 0; i < num_built_in_commands; i++) {
+        if (strcmp(args[0], built_in_commands[i].name) == 0) {
+            built_in_commands[i].function(args);
+            return 1; /* Command executed */
+        }
+    }
+
+    return 0; /* Not a built-in command */
 }
