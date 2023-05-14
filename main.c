@@ -36,6 +36,8 @@ int main(int argc, char **argv)
         /* Interactive mode */
         while (y == 1)
         {
+            char **command = NULL;
+
             printf("$ ");
             br = getline(&cmd, &n, stdin);
             if (br == EOF) 
@@ -44,13 +46,18 @@ int main(int argc, char **argv)
                 break;
             }
             if (cmd[0] == '\n') continue;
-            av = prs(cmd);
-            if (!execute_builtin_command(av))
+            command = prs(cmd, 1);
+            
+            for (i = 0; command[i] != NULL; i++)
             {
-                execute_command(av, environ, 0, Name, argc);
+                av = prs(command[i], 0);
+                if (!execute_builtin_command(av))
+                {
+                    execute_command(av, environ, 0, Name, argc);
+                }
             }
             for (i = 0; av[i] != NULL; i++)
-                free(av[i]);
+                    free(av[i]);
 
             free(av);
         }

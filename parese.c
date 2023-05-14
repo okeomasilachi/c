@@ -1,12 +1,20 @@
 #include "main.h"
 
-char **prs(char *command)
+char **prs(char *command, size_t k)
 {
-	char *com_cpy = NULL, *tok, *dl = " \t\n\r";
+	char *com_cpy = NULL, *tok, *dl = NULL;
 	Tokenizer tokens;
 	size_t count = 0, cnt = 0;
 	char **av = NULL;
 
+	if (k == 0)
+	{
+		dl = " \t\n\r";
+	}
+	else if (k == 1)
+	{
+		dl = ";\n";
+	}
 	if (command)
 	{
 		com_cpy = strdup(command);

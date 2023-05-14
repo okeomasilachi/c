@@ -27,7 +27,7 @@ typedef struct {
 /* call the f_tokenizer function before using s_tok function passing in the parameters */
 void f_tokenizer(Tokenizer *tokenizer, char *input_string);
 char *s_tok(Tokenizer *tokenizer, const char *delimiters);
-char **prs(char *command);
+char **prs(char *command, size_t k);
 void reallocate(char **args, char **av, int argc);
 /*--------------------------------------------------------------*/
 int open_file(const char* filename);
@@ -55,10 +55,8 @@ struct built_in
     void (*function)(char **args);
 };
 
-/*void exit_func(char **args);
-void _cd(char **args);
-void _setenv(char **args);
-void _unsetenv(char **args);
-int num_B_in();*/
+/*--------------------------------------------------------------------------*/
+
+void tokenize_input(char* input, char** tokens, const char* delimiter);
 
 #endif /* MAIN_H */

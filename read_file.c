@@ -89,6 +89,7 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 {
 	size_t read;
 	int i;
+	char **command = NULL;
 
 	cmd = read_file(argv[1]);
         /* Remove trailing newline character, if any */
@@ -98,8 +99,16 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 	if (read > 0 && cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';
 
-        av = prs(cmd);
-	execute_command(av, environ, 0, Name, argc);
+	command = prs(cmd, 1);
+            
+        for (i = 0; command[i] != NULL; i++)
+        {
+            av = prs(command[i], 0);
+            if (!execute_builtin_command(av))
+            {
+                execute_command(av, environ, 0, Name, argc);
+            }
+	}
         for (i = 0; av[i] != NULL; i++)
 		free(av[i]);
 
