@@ -16,7 +16,6 @@
 #define BUFFER_SIZE 1024
 
 /*---------------------------------------------------------------*/
-
 /* for tokenization of strings */
 
 typedef struct {

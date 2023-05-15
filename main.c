@@ -2,49 +2,26 @@
 
 int main(int argc, char **argv)
 {
-    char *cmd = NULL, **av = NULL, *Name = argv[0];
+    char *cmd = NULL, **av = NULL, *Name = argv[0], *pr;
     size_t n = 0;
     ssize_t br = 0;
-    int i, y = 1;
+    int i;
     
+    (void)n;
     /* Check if av[1] is a file */	
-    if (argc > 1)
+    if (argc <= 1)
     {
-        y = 0;
-
-	    if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], X_OK) != 0)
-	    {
-	            file_process(argv, av, cmd, Name, argc);
-	    }
-	    else
-	    {
-            char *com = argv[1];
-            char *args[11];
-            int arg_c = 0;
-
-            for (i = 1; i < argc; i++)
-            {
-                args[arg_c++] = argv[i];
-            }
-            args[arg_c] = NULL;
-
-            exec_command(args, environ, com, Name, argc);
-	    }
-    }
-    else
-    {
-        /* Interactive mode */
-        while (y == 1)
+        /*Interactive mode*/
+        while (true)
         {
             char **command = NULL;
-
-            printf("$ ");
+            
+            pr = "$ ";
+            printf("%s", pr);
             br = getline(&cmd, &n, stdin);
             if (br == EOF) 
-            {
-                putchar('\n');
                 break;
-            }
+
             if (cmd[0] == '\n') continue;
             command = prs(cmd, 1);
             
@@ -61,7 +38,31 @@ int main(int argc, char **argv)
 
             free(av);
         }
+            
+    }
+    else if (argc > 1)
+    {
+        pr = NULL;
+	    if (argc == 2 && access(argv[1], F_OK) == 0 && access(argv[1], X_OK) != 0)
+	    {
+	            file_process(argv, av, cmd, Name, argc);
+	    }
+	    else
+	    {
+            char *com = argv[1];
+            char *args[11];
+            int arg_c = 0;
+
+            for (i = 1; i < argc; i++)
+            {
+                args[arg_c++] = argv[i];
+            }
+            args[arg_c] = NULL;
+            exec_command(args, environ, com, Name, argc);
+            
+	    }
     }
     free(cmd);
+    putchar('\n'); 
     return EXIT_SUCCESS;
 }

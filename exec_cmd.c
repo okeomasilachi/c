@@ -73,79 +73,33 @@ void exec_command(char** args, char** envp, char *arg, char *Name, int argc)
 {
 	char *ec;
     pid_t child_pid;
-    int status;
-    
-    ec = find_executable(arg);
-    if (ec == NULL)
+    int status, comm;
+
+    if ((comm = execute_builtin_command(args, Name, argc)) == 0)
     {
-	    dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, arg);
-    }
-    else
-    {
-        child_pid = fork();
-        if (child_pid == -1)
+        ec = find_executable(arg);
+        if (ec == NULL)
         {
-            perror("Error:");
-        }
-        if (child_pid == 0)
-        {
-            execve(ec, args, envp);
-    	    perror("Command execution failed");
-    	    exit(EXIT_FAILURE);
+	        dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, arg);
         }
         else
         {
-            waitpid(child_pid, &status, 0);
-            return;
-            /*exit(EXIT_SUCCESS);*/
+            child_pid = fork();
+            if (child_pid == -1)
+            {
+                perror("Error:");
+            }
+            if (child_pid == 0)
+            {
+                execve(ec, args, envp);
+        	    perror("Command execution failed");
+        	    exit(EXIT_FAILURE);
+            }
+            else
+            {
+                waitpid(child_pid, &status, 0);
+                exit(EXIT_SUCCESS);
+            }
         }
     }
-}
-
-/*int num_B_in()
-{
-	return (sizeof(b_s) / sizeof(struct built_in));
-}
-
-void exit_func(char **args)
-{
-	if (args[1] == NULL)
-	{
-		exit(EXIT_SUCCESS);
-	}
-	else if (args[1] != NULL)
-	{
-		exit(atoi(args[1]));
-	}
-}
-
-void _cd(char **args)
-{
-	const char *home = getenv("HOME");
-
-    if (args[1] == NULL)
-    {
-        if (home == NULL)
-            dprintf(STDERR_FILENO, "cd: Home directory not found\n");
-
-        if (home)
-            chdir(home);
-    }
-    else
-    {
-        chdir(args[1]);
-    }
-}
-
-void _setenv(char **args)
-{
-    if (args[1] != NULL && args[2] != NULL)
-        setenv(args[1], args[2], 1);
-}
-
-void _unsetenv(char **args)
-{
-    if (args[1] != NULL)
-        unsetenv(args[1]);
-}
-*/
+}   
