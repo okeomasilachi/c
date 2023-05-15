@@ -51,7 +51,7 @@ int main(int argc, char **argv)
             for (i = 0; command[i] != NULL; i++)
             {
                 av = prs(command[i], 0);
-                if (!execute_builtin_command(av))
+                if (!execute_builtin_command(av, Name, argc))
                 {
                     execute_command(av, environ, 0, Name, argc);
                 }

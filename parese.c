@@ -55,17 +55,53 @@ struct built_in built_in_commands[] = {
 };
 
 /* Implementations of built-in commands */
-void cd_command(char** args) {
-    if (args[1] == NULL) {
-        fprintf(stderr, "cd: missing argument\n");
+void cd_command(char** args, char *NAME, int argc) {
+
+    char *ok, *old, *new;
+    
+    if (args[1] == NULL || strcmp(args[1], "~") == 0 || strcmp(args[1], "-") == 0) {
+        if (strcmp(args[1], "-") == 0)
+        {
+            old = getenv("OLDPWD");
+            new = getenv("PWD");
+            setenv("OLDPWD", new, 1);
+            setenv("PWD", old, 1);
+            chdir(old);
+            
+        }
+        else
+        {
+            ok = getenv("HOME");
+            new = getenv("PWD");
+            setenv("OLDPWD", new, 1);
+            setenv("PWD", ok, 1);
+            
+            chdir(ok);
+        }
+              
     } else {
-        if (chdir(args[1]) != 0) {
-            perror("cd");
+
+        if (access(args[1], F_OK) != -1)
+        {
+            ok = getenv("PWD");
+
+            if (chdir(args[1]) == 0) {
+                setenv("OLDPWD", ok, 1);
+                setenv("PWD", args[1], 1);
+
+            }else {
+                dprintf(STDERR_FILENO, "%s: %d: %s: can't cd to %s\n", NAME, argc, args[0], args[1]);
+            }
+        }
+        else
+        {
+           dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", NAME, argc + 1, args[1]); 
         }
     }
 }
 
-void exit_command(char** args) {
+void exit_command(char** args, char *NAME, int argc) {
+    (void)NAME, (void)argc;
     if (args[1] == NULL)
     {
 	exit(EXIT_SUCCESS);
@@ -76,7 +112,8 @@ void exit_command(char** args) {
     }
 }
 
-void setenv_command(char** args) {
+void setenv_command(char** args, char *NAME, int argc) {
+    (void)NAME, (void)argc;
     if (args[1] == NULL || args[2] == NULL) {
         fprintf(stderr, "setenv: missing argument\n");
     } else {
@@ -86,7 +123,8 @@ void setenv_command(char** args) {
     }
 }
 
-void unsetenv_command(char** args) {
+void unsetenv_command(char** args,  char *NAME, int argc) {
+    (void)NAME, (void)argc;
     if (args[1] == NULL) {
         fprintf(stderr, "unsetenv: missing argument\n");
     } else {
@@ -96,8 +134,9 @@ void unsetenv_command(char** args) {
     }
 }
 
-void help_command(char** args) {
-
+void help_command(char** args,  char *NAME, int argc) {
+    
+    (void)NAME, (void)argc;
     if (args[1] == NULL)
     {
         printf("This is a simple shell program.\n");
@@ -116,12 +155,12 @@ void help_command(char** args) {
 }
 
 /* Execute the built-in command */
-int execute_builtin_command(char** args) {
+int execute_builtin_command(char** args,  char *NAME, int argc) {
     int num_built_in_commands = sizeof(built_in_commands) / sizeof(struct built_in), i;
 
     for (i = 0; i < num_built_in_commands; i++) {
         if (strcmp(args[0], built_in_commands[i].name) == 0) {
-            built_in_commands[i].function(args);
+            built_in_commands[i].function(args, NAME, argc);
             return 1; /* Command executed */
         }
     }

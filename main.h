@@ -42,17 +42,17 @@ void exec_command(char** args, char** envp, char *arg, char *Name, int argc);
 char* find_executable(char *argv);
 int is_executable(char *argv);
 /*---------------------------------------------------------------*/
-void cd_command(char** args);
-void exit_command(char** args);
-void setenv_command(char** args);
-void unsetenv_command(char** args);
-void help_command(char** args);
-int execute_builtin_command(char** args);
+void cd_command(char** args, char *NAME, int argc);
+void exit_command(char** args, char *NAME, int argc);
+void setenv_command(char** args, char *NAME, int argc);
+void unsetenv_command(char** args, char *NAME, int argc);
+void help_command(char** args, char *NAME, int argc);
+int execute_builtin_command(char** args, char *NAME, int argc);
 
 struct built_in
 {
     char *name;
-    void (*function)(char **args);
+    void (*function)(char **args, char *NAME, int argc);
 };
 
 /*--------------------------------------------------------------------------*/
