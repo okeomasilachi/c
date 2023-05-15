@@ -72,10 +72,10 @@ void cd_command(char** args, char *NAME, int argc) {
         else
         {
             ok = getenv("HOME");
-            new = getenv("PWD");
+            /*new = getenv("PWD");
             setenv("OLDPWD", new, 1);
             setenv("PWD", ok, 1);
-            
+            */
             chdir(ok);
         }
               
