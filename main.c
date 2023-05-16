@@ -28,9 +28,12 @@ int main(int argc, char **argv)
 		av = prs(command[i], 0);
 		if (!execute_builtin_command(av,Name,argc))
 		{
-
+			char *ec;
+			if ((ec = find_executable(av[0])) != NULL)
+			{
+				execve(ec, av, environ);
+			}
 		}
-		B_exc(argc, Name, command, av, environ);
 	}
     }
     else
