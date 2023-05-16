@@ -69,37 +69,3 @@ void execute_command(char** args, char** envp, size_t n, char *Name, int argc)
     }
 }
 
-void exec_command(char** args, char** envp, char *arg, char *Name, int argc)
-{
-	char *ec;
-    pid_t child_pid;
-    int status, comm;
-
-    if ((comm = execute_builtin_command(args, Name, argc)) == 0)
-    {
-        ec = find_executable(arg);
-        if (ec == NULL)
-        {
-	        dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, arg);
-        }
-        else
-        {
-            child_pid = fork();
-            if (child_pid == -1)
-            {
-                perror("Error:");
-            }
-            if (child_pid == 0)
-            {
-                execve(ec, args, envp);
-        	    perror("Command execution failed");
-        	    exit(EXIT_FAILURE);
-            }
-            else
-            {
-                waitpid(child_pid, &status, 0);
-                exit(EXIT_SUCCESS);
-            }
-        }
-    }
-}   

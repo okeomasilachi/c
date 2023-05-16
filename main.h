@@ -56,4 +56,6 @@ struct built_in
 
 /*--------------------------------------------------------------------------*/
 
+void B_exc(int argc, char *Name, char **command, char **av, char **environ);
+
 #endif /* MAIN_H */
