@@ -1,7 +1,7 @@
 # Simple Shell
 ## Usage
 ## Builtins
-## Compilation 
+## Compilation
 ## Author's
 Onyedibia Okeomasilachi
-Ebiri ThankGod Kelechi 
+Ebiri ThankGod Kelechi

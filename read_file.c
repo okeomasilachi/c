@@ -3,7 +3,7 @@
 /**
  * 
 */
-int open_file(const char* filename)
+int open_file(const char *filename)
 {
 	int fd;
 
@@ -16,7 +16,7 @@ int open_file(const char* filename)
 /**
  * 
 */
-char* read_lines(int fd)
+char *read_lines(int fd)
 {
 	char *line = NULL, buffer[BUFFER_SIZE];
 	ssize_t bytes_read, i, line_length = 0;
@@ -74,7 +74,7 @@ char* read_lines(int fd)
 /**
  * 
 */
-char* read_file(const char* filename)
+char *read_file(const char *filename)
 {
 	int fd;
 	char *content;
@@ -102,12 +102,11 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 		cmd[read - 1] = '\0';
 
 	command = prs(cmd, 1);
-
 	for (i = 0; command[i] != NULL; i++)
 	{
-	    av = prs(command[i], 0);
-	    if (!execute_builtin_command(av, Name, argc))
-		execute_command(av, environ, 0, Name, argc);
+		av = prs(command[i], 0);
+		if (!execute_builtin_command(av, Name, argc))
+			execute_command(av, environ, 0, Name, argc);
 	}
 	for (i = 0; av[i] != NULL; i++)
 		free(av[i]);

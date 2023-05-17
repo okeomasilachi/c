@@ -60,7 +60,7 @@ struct built_in built_in_commands[] = {
 int execute_builtin_command(char** args,  char *NAME, int argc)
 {
 	int num_built_in_commands = sizeof(built_in_commands) / sizeof(struct built_in), i;
-	
+
 	for (i = 0; i < num_built_in_commands; i++)
 	{
 		if (strcmp(args[0], built_in_commands[i].name) == 0)

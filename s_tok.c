@@ -15,7 +15,7 @@ void f_tokenizer(Tokenizer *tokenizer, char *input_string)
 char *s_tok(o_tok *tokenizer, const char *delimiters)
 {
 	char *token;
-	
+
 	if (tokenizer->cur_tok_st == NULL)
 		return (NULL);
 	/* Skip leading delimiters */
@@ -40,6 +40,6 @@ char *s_tok(o_tok *tokenizer, const char *delimiters)
 	}
 	token = tokenizer->cur_tok_st;
 	tokenizer->cur_tok_st = tokenizer->nxt_tok_st;
-	
+
 	return (token);
 }
