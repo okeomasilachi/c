@@ -98,16 +98,6 @@ void help_command(char **args,  char *NAME, int argc)
 	if (args[1] == NULL)
 	{
 		printf("This is a simple shell program.\n");
-		printf("                    Supported built-in commands:\n");
-		printf("\n/----------------------------------------------------------------------------------------/\n");
-		printf("    Name                                        Usage\n");
-		printf("\n");
-		printf("    cd                                          cd <Directory path>\n");
-		printf("    help                                        help\n");
-		printf("    exit                                        exit <Enter> or exit Status\n");
-		printf("    setenv                                      setenv [NAME] <value>\n");
-		printf("    unsetenv                                    unsetenv [NAME]\n");
-		printf("\n/---------------------------------------------------------------------------------------/\n");
-		printf("    Authors                                     Ebiri ThankGod, Onyedibia Okeomasilachi.\n");
+		printf("Authors\nEbiri ThankGod, Onyedibia Okeomasilachi.\n");
 	}
 }

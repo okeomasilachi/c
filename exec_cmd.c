@@ -17,7 +17,7 @@ char *find_executable(char *argv)
 	{
 		token_len = strlen(token);
 		exec_name_len = strlen(argv);
-		executable_path = (char*)malloc((token_len + exec_name_len + 2) * sizeof(char));
+		executable_path = (char *)malloc((token_len + exec_name_len + 2) * sizeof(char));
 		if (executable_path == NULL)
 		{
 			perror("Memory allocation failed");

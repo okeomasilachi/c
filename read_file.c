@@ -18,57 +18,35 @@ int open_file(const char *filename)
 */
 char *read_lines(int fd)
 {
-	char *line = NULL, buffer[BUFFER_SIZE];
-	ssize_t bytes_read, i, line_length = 0;
-	int leading_space = 1; /* tracing leading space in a file */
-
+	char *file_contents = NULL, buffer[BUFFER_SIZE];
+	size_t file_size = 0;
+	ssize_t bytes_read;
+	
 	bytes_read = read(fd, buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
-		for (i = 0; i < bytes_read; i++)
-		{
-			if (leading_space && (isspace(buffer[i]) || buffer[i] == '\n' || buffer[i] == '\t'))
-				continue;
-			else
-				leading_space = 0;
-
-			if (buffer[i] == '\n')
-			{
-				if (leading_space)
-				{
-					line_length -= i;
-					continue;
-				}
-				line = realloc(line, line_length + i + 2);
-				if (line == NULL) /* error from relloc */
-				{
-					close(fd);
-					return (NULL);
-				}
-				memcpy(line + line_length, buffer, i + 1);
-				line[line_length + i + 1] = '\0';
-				line_length = 0;
-				memmove(buffer, buffer + i + 1, bytes_read - i - 1);
-				close(fd);
-				return (line);
-			}
-		}
-		line_length += bytes_read;
-		bytes_read = read(fd, buffer, sizeof(buffer));
-	}
-	if (line_length > 0)
-	{
-		line = realloc(line, line_length + 1);
-		if (line == NULL) /* error from relloc */
+		file_contents = realloc(file_contents, file_size + bytes_read + 1);
+		if (file_contents == NULL)
 		{
 			close(fd);
 			return (NULL);
 		}
-		memcpy(line + line_length, buffer, line_length);
-		line[line_length] = '\0';
+		memcpy(file_contents + file_size, buffer, bytes_read);
+		file_size += bytes_read;
+		bytes_read = read(fd, buffer, sizeof(buffer));
+	}
+	if (file_size > 0)
+	{
+		file_contents = realloc(file_contents, file_size + 1);
+		if (file_contents == NULL)
+		{
+			close(fd);
+			return (NULL);
+		}
+		file_contents[file_size] = '\0';
 	}
 	close(fd);
-	return (line);
+	return (file_contents);
 }
 
 /**
