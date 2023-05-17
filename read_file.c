@@ -1,36 +1,37 @@
 #include "main.h"
 
+/**
+ * 
+*/
 int open_file(const char* filename)
 {
 	int fd;
-	
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-	{
 		perror("open");
-	}
 	return (fd);
 }
 
+/**
+ * 
+*/
 char* read_lines(int fd)
 {
 	char *line = NULL, buffer[BUFFER_SIZE];
 	ssize_t bytes_read, i, line_length = 0;
 	int leading_space = 1; /* tracing leading space in a file */
-	
+
 	bytes_read = read(fd, buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
 		for (i = 0; i < bytes_read; i++)
 		{
 			if (leading_space && (isspace(buffer[i]) || buffer[i] == '\n' || buffer[i] == '\t'))
-			{
 				continue;
-			}
 			else
-			{
 				leading_space = 0;
-			}
+
 			if (buffer[i] == '\n')
 			{
 				if (leading_space)
@@ -70,7 +71,9 @@ char* read_lines(int fd)
 	return (line);
 }
 
-
+/**
+ * 
+*/
 char* read_file(const char* filename)
 {
 	int fd;
@@ -78,13 +81,14 @@ char* read_file(const char* filename)
 
 	fd = open_file(filename);
 	if (fd == -1)
-	{
 		return (NULL);
-	}
 	content = read_lines(fd);
 	return (content);
 }
 
+/**
+ * 
+*/
 void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 {
 	size_t read;
@@ -92,26 +96,23 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 	char **command = NULL;
 
 	cmd = read_file(argv[1]);
-        /* Remove trailing newline character, if any */
-        read = strlen(cmd);
-
-	
+	/* Remove trailing newline character, if any */
+	read = strlen(cmd);
 	if (read > 0 && cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';
 
 	command = prs(cmd, 1);
-            
-        for (i = 0; command[i] != NULL; i++)
-        {
-            av = prs(command[i], 0);
-            if (!execute_builtin_command(av, Name, argc))
-            {
-                execute_command(av, environ, 0, Name, argc);
-            }
+
+	for (i = 0; command[i] != NULL; i++)
+	{
+	    av = prs(command[i], 0);
+	    if (!execute_builtin_command(av, Name, argc))
+		execute_command(av, environ, 0, Name, argc);
 	}
-        for (i = 0; av[i] != NULL; i++)
+	for (i = 0; av[i] != NULL; i++)
 		free(av[i]);
 
-        free(av);
+	free(av);
 	cmd = NULL;
+	exit(EXIT_SUCCESS);
 }
