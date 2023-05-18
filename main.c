@@ -4,7 +4,7 @@ int main(int argc, char **argv)
 {
 	char *cmd = NULL, **av = NULL, *Name = argv[0], **command = NULL;
 	bool int_active = isatty(STDIN_FILENO);
-	int i;
+
 
 	if (access(argv[1], F_OK) == 0 && argc == 2)
 	{
@@ -28,17 +28,14 @@ int main(int argc, char **argv)
 		free(cmd), free(Name), free(av), free(command);
 		exit(EXIT_SUCCESS);
 	}
-	else if (!int_active)
+	else
 	{
 		cmd = _getline();
 		command = prs(cmd, 1);
 		B_exc(argc, Name, command, av, environ);
-		for (i = 0; command[1] != NULL; i++)
-				free(command[i]);
 			
-		free(command), free(cmd), free(Name), free(av);
+		free(command), free(av);
 	}
 
-	
 	return 0;
 }

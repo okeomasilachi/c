@@ -16,8 +16,8 @@ void B_exc(int argc, char *Name, char **command, char **av, char **environ)
 		}
 		for (j = 0; av[j] != NULL; j++)
 			free(av[j]);
-		
-		free(av);	
+
+		free(av);
 	}
 }
 
