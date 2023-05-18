@@ -71,7 +71,7 @@ void execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 	ec = find_executable(args[n]);
 	if (ec == NULL)
 	{
-		dprintf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, args[n]);
+		pf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, args[n]);
 	}
 	else
 	{

@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 	}
 	if (argv[1] != NULL)
 	{
-		dprintf(STDERR_FILENO, "%s: %d: cannot open %s: No such file\n", Name, 0, argv[1]);
+		pf(STDERR_FILENO, "%s: %d: cannot open %s: No such file\n", Name, 0, argv[1]);
 		exit(EXIT_SUCCESS);
 	}
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	{
 		while (true)
 		{
-			write(STDOUT_FILENO, "$ ", 2);
+			pf(STDOUT_FILENO, "$ ");
 			cmd = _getline();			
 			command = prs(cmd, 1);
 			B_exc(argc, Name, command, av, environ);

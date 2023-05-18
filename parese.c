@@ -73,8 +73,6 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 	return (0); /* Not a built-in command */
 }
 
-#include "main.h"
-
 /* Define a global buffer to hold input read from standard input*/
 
 static char buffer[BUFFER_SIZE];
@@ -102,7 +100,7 @@ void read_input(void)
 
 		if (buffer_size == 0)
 		{
-			write(STDOUT_FILENO, "\n", 1);
+			pf(STDOUT_FILENO, "\n");
 			exit(EXIT_SUCCESS);
 		}
 		buffer_pos = 0;

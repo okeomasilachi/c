@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
@@ -61,4 +62,11 @@ struct built_in
 void B_exc(int argc, char *Name, char **command, char **av, char **environ);
 void read_input(void);
 char *_getline(void);
+/*--------------------------------------------------------------------------*/
+void pf(int stream, const char* format, ...);
+void write_string(int n, const char *s);
+void print_character(char ch, int n);
+void print_integer(int num, int n);
+void print_string(char *s, int n);
+void print_unsigned_integer(unsigned int u, int n);
 #endif /* MAIN_H */

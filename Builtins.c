@@ -14,7 +14,7 @@ void cd_command(char **args, char *NAME, int argc)
 	{
 		ok = getenv("HOME");
 		chdir(ok);
-		puts(ok);
+		pf(STDOUT_FILENO, "%s\n", ok);
 		return;
 	}
 	if ((i = strcmp(args[1], "-")) == 0)
@@ -24,7 +24,7 @@ void cd_command(char **args, char *NAME, int argc)
 		setenv("OLDPWD", new, 1);
 		setenv("PWD", old, 1);
 		chdir(old);
-		puts(old);
+		pf(STDOUT_FILENO, "%s\n", old);
 	}
 	else
 	{
@@ -33,11 +33,11 @@ void cd_command(char **args, char *NAME, int argc)
 		{
 			setenv("OLDPWD", ok, 1);
 			ok = getenv("PWD");
-			puts(ok);
+			pf(STDOUT_FILENO, "%s\n", ok);
 			setenv("PWD", ok, 1);
 		}
 		else
-			dprintf(STDERR_FILENO, "%s: %d: %s: can't cd to %s\n", NAME, argc, args[0], args[1]);
+			pf(STDERR_FILENO, "%s: %d: %s: can't cd to %s\n", NAME, argc, args[0], args[1]);
 	}
 }
 
@@ -64,7 +64,7 @@ void setenv_command(char **args, char *NAME, int argc)
 	(void)NAME, (void)argc;
 
 	if (args[1] == NULL || args[2] == NULL)
-		dprintf(STDERR_FILENO, "setenv: missing argument\n");
+		pf(STDERR_FILENO, "setenv: missing argument\n");
 	else
 	{
 		if (setenv(args[1], args[2], 1) != 0)
@@ -80,7 +80,7 @@ void unsetenv_command(char **args,  char *NAME, int argc)
 	(void)NAME, (void)argc;
 
 	if (args[1] == NULL)
-		dprintf(STDERR_FILENO, "unsetenv: missing argument\n");
+		pf(STDERR_FILENO, "unsetenv: missing argument\n");
 	else
 	{
 		if (unsetenv(args[1]) != 0)
@@ -97,7 +97,7 @@ void help_command(char **args,  char *NAME, int argc)
 
 	if (args[1] == NULL)
 	{
-		printf("This is a simple shell program.\n");
-		printf("Authors\nEbiri ThankGod, Onyedibia Okeomasilachi.\n");
+		pf(STDOUT_FILENO, "This is a simple shell program\n");
+		pf(STDOUT_FILENO, "Authors\nEbiri ThankGod, Onyedibia Okeomasilachi.\n");
 	}
 }
