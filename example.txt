@@ -1,5 +1,4 @@
 ls
 pwd
-env
-ls -l
+env ; ls -l
 ls -a

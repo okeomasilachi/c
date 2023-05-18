@@ -4,6 +4,7 @@ int main(int argc, char **argv)
 {
 	char *cmd = NULL, **av = NULL, *Name = argv[0], **command = NULL;
 	bool int_active = isatty(STDIN_FILENO);
+	int i;
 
 	if (access(argv[1], F_OK) == 0 && argc == 2)
 	{
@@ -22,11 +23,9 @@ int main(int argc, char **argv)
 			write(STDOUT_FILENO, "$ ", 2);
 			cmd = _getline();			
 			command = prs(cmd, 1);
-			while (command)
-				printf(command:);
-			/*B_exc(argc, Name, command, av, environ);*/
+			B_exc(argc, Name, command, av, environ);
 		}
-		free(cmd);
+		free(cmd), free(Name);
 		exit(EXIT_SUCCESS);
 	}
 	else if (!int_active)
@@ -34,6 +33,10 @@ int main(int argc, char **argv)
 		cmd = _getline();
 		command = prs(cmd, 1);
 		B_exc(argc, Name, command, av, environ);
+		for (i = 0; command[1] != NULL; i++)
+				free(command[i]);
+			
+		free(command), free(cmd), free(Name);
 	}
 
 	

@@ -5,7 +5,7 @@
 */
 void B_exc(int argc, char *Name, char **command, char **av, char **environ)
 {
-	int i;
+	int i, j;
 
 	for (i = 0; command[i] != NULL; i++)
 	{
@@ -14,10 +14,10 @@ void B_exc(int argc, char *Name, char **command, char **av, char **environ)
 		{
 			execute_command(av, environ, 0, Name, argc);
 		}
-		for (i = 0; av[i] != NULL; i++)
-			free(av[i]);
+		for (j = 0; av[j] != NULL; j++)
+			free(av[j]);
 		
-		free(av);
+		free(av);	
 	}
 }
 
