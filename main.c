@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 			command = prs(cmd, 1);
 			B_exc(argc, Name, command, av, environ);
 		}
-		free(cmd), free(Name);
+		free(cmd), free(Name), free(av), free(command);
 		exit(EXIT_SUCCESS);
 	}
 	else if (!int_active)
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 		for (i = 0; command[1] != NULL; i++)
 				free(command[i]);
 			
-		free(command), free(cmd), free(Name);
+		free(command), free(cmd), free(Name), free(av);
 	}
 
 	
