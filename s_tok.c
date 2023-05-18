@@ -12,7 +12,7 @@ void f_tokenizer(Tokenizer *tokenizer, char *input_string)
 /**
  * 
 */
-char *s_tok(o_tok *tokenizer, const char *delimiters)
+char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 {
 	char *token;
 

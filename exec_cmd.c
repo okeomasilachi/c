@@ -1,6 +1,27 @@
 #include "main.h"
 
 /**
+ *
+*/
+void B_exc(int argc, char *Name, char **command, char **av, char **environ)
+{
+	int i;
+
+	for (i = 0; command[i] != NULL; i++)
+	{
+		av = prs(command[i], 0);
+		if (!execute_builtin_command(av, Name, argc))
+		{
+			execute_command(av, environ, 0, Name, argc);
+		}
+		for (i = 0; av[i] != NULL; i++)
+			free(av[i]);
+		
+		free(av);
+	}
+}
+
+/**
  * 
 */
 char *find_executable(char *argv)
@@ -56,7 +77,8 @@ void execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 	{
 		child_pid = fork();
 		if (child_pid == -1)
-			perror("Error:");
+			perror("fork");
+
 		if (child_pid == 0)
 		{
 			execve(ec, args, envp);

@@ -11,7 +11,8 @@ char **prs(char *command, size_t del_n)
 
 	if (del_n == 0)
 		dl = " \t\n\r";
-	else if (del_n == 1)
+
+	if (del_n == 1)
 		dl = ";\n";
 
 	if (command)
@@ -70,4 +71,83 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 		}
 	}
 	return (0); /* Not a built-in command */
+}
+
+#include "main.h"
+
+/* Define a global buffer to hold input read from standard input*/
+
+static char buffer[BUFFER_SIZE];
+static int buffer_pos;
+static int buffer_size;
+
+/**
+ * read_input - reads input from a buffer
+ *
+ * Return: read inputs
+ */
+
+void read_input(void)
+{
+	fflush(stdout);
+
+	if (buffer_pos >= buffer_size)
+	{
+		buffer_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		if (buffer_size == -1)
+		{
+			perror("read");
+			exit(EXIT_FAILURE);
+		}
+
+		if (buffer_size == 0)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			exit(EXIT_SUCCESS);
+		}
+		buffer_pos = 0;
+	}
+}
+
+
+/**
+ * _getline - function reads from a buffer
+ *
+ *Return: the charactersread from the buffer
+ */
+
+char *_getline(void)
+{
+	char *line = NULL;
+	int line_size = 0;
+
+	while (1)
+	{
+		if (buffer_pos >= buffer_size)
+		{
+			read_input();
+		}
+
+		if (buffer[buffer_pos] == '\n')
+		{
+			buffer_pos++;
+			line = realloc(line, line_size + buffer_pos);
+			memcpy(line + line_size, buffer, buffer_pos);
+			line_size += buffer_pos;
+			line[line_size - 1] = '\0';
+
+			return (line);
+		}
+		buffer_pos++;
+	}
+
+	if (line != NULL)
+	{
+		line = realloc(line, line_size + buffer_pos);
+		memcpy(line + line_size, buffer, buffer_pos);
+		line_size += buffer_pos;
+		line[line_size - 1] = '\0';
+	}
+
+	return (line);
 }
