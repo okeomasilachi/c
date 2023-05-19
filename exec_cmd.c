@@ -14,6 +14,7 @@ void B_exc(int argc, char *Name, char **command, char **av, char **environ)
 		{
 			execute_command(av, environ, 0, Name, argc);
 		}
+
 		for (j = 0; av[j] != NULL; j++)
 			free(av[j]);
 
@@ -30,6 +31,11 @@ char *find_executable(char *argv)
 	size_t token_len, exec_name_len;
 	Tokenizer Hook;
 
+	if (access(argv, X_OK) == 0)
+ 	{
+ 	       executable_path = strdup(argv);
+ 	       return executable_path;
+	}
 	path_env = getenv("PATH");
 	path_copy = strdup(path_env);
 	f_tokenizer(&Hook, path_copy);

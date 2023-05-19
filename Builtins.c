@@ -1,7 +1,12 @@
 #include "main.h"
 
 /**
+ * cd_command - changes directory to the specified path
+ * @args: arguments to work with
+ * @NAME: name of the compiled program
+ * @argc: argument count
  *
+ * Return: void
 */
 void cd_command(char **args, char *NAME, int argc)
 {
@@ -42,7 +47,12 @@ void cd_command(char **args, char *NAME, int argc)
 }
 
 /**
- * 
+ * exit_command - exits the program
+ * @args: arguments to work with
+ * @NAME: name of the compiled program
+ * @argc: argument count
+ *
+ * Return: void
 */
 void exit_command(char **args, char *NAME, int argc)
 {
@@ -57,7 +67,12 @@ void exit_command(char **args, char *NAME, int argc)
 }
 
 /**
- * 
+ * setenv_command - sets the specified environ
+ * @args: arguments to work with
+ * @NAME: name of the compiled program
+ * @argc: argument count
+ *
+ * Return: void
 */
 void setenv_command(char **args, char *NAME, int argc)
 {
@@ -73,7 +88,12 @@ void setenv_command(char **args, char *NAME, int argc)
 }
 
 /**
- * 
+ * _command - changes directory to the specified path
+ * @args: arguments to work with
+ * @NAME: name of the compiled program
+ * @argc: argument count
+ *
+ * Return: void
 */
 void unsetenv_command(char **args,  char *NAME, int argc)
 {
