@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	{
 		while (true)
 		{
-			pf(STDOUT_FILENO, "$ ");
+			pf(STDOUT_FILENO, "T_O_$ ");
 			cmd = _getline();
 			command = prs(cmd, 1);
 			B_exc(argc, Name, command, av, environ);

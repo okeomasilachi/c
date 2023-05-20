@@ -13,7 +13,10 @@ char **prs(char *command, size_t del_n)
 		dl = " \t\n\r";
 
 	if (del_n == 1)
-		dl = ";&\n";
+		dl = ";\n";
+	
+	if (del_n == 2)
+		dl = "&&\\";
 
 	if (command)
 	{
@@ -52,6 +55,7 @@ struct built_in built_in_commands[] = {
 	{"exit", exit_command},
 	{"setenv", setenv_command},
 	{"unsetenv", unsetenv_command},
+	/*{"alias", parseArs_alias},*/
 	{"help", help_command},
 };
 

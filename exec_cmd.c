@@ -3,23 +3,33 @@
 /**
  *
 */
-void B_exc(int argc, char *Name, char **command, char **av, char **environ)
+int B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 {
-	int i, j;
+	int j, r;
 
-	for (i = 0; command[i] != NULL; i++)
+	av = prs(cmd, 0);
+	if (!execute_builtin_command(av, Name, argc))
+	{
+		r = execute_command(av, environ, 0, Name, argc);
+	}
+
+	for (j = 0; av[j] != NULL; j++)
+		free(av[j]);
+	free(av);
+
+	/*for (i = 0; command[i] != NULL; i++)
 	{
 		av = prs(command[i], 0);
 		if (!execute_builtin_command(av, Name, argc))
 		{
-			execute_command(av, environ, 0, Name, argc);
+			r = execute_command(av, environ, 0, Name, argc);
 		}
 
 		for (j = 0; av[j] != NULL; j++)
 			free(av[j]);
-
 		free(av);
-	}
+	}*/
+	return (r);
 }
 
 /**
@@ -69,7 +79,7 @@ char *find_executable(char *argv)
 /**
  * 
 */
-void execute_command(char **args, char **envp, size_t n, char *Name, int argc)
+int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 {
 	char *ec;
 	pid_t child_pid;
@@ -85,15 +95,21 @@ void execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 		if (child_pid == -1)
 			perror("fork");
 
-		if (child_pid == 0)
+		else if (child_pid == 0)
 		{
 			execve(ec, args, envp);
-			perror("Command execution failed");
 			exit(EXIT_FAILURE);
 		}
 		else
 		{
 			waitpid(child_pid, &status, 0);
+			if (WIFEXITED(status))
+			{
+				return (WEXITSTATUS(status));
+			}
 		}
+
+		return (-1);
 	}
+	return (-1);
 }
