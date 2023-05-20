@@ -71,7 +71,7 @@ struct built_in
 	void (*function)(char **args, char *NAME, int argc);
 };
 /*--------------------------------------------------------------------------*/
-int B_exc(int argc, char *Name, char *cmd, char **av, char **environ);
+void B_exc(int argc, char *Name, char *cmd, char **av, char **environ);
 void read_input(void);
 char *_getline(void);
 /*--------------------------------------------------------------------------*/
@@ -83,4 +83,5 @@ void parseArs_alias(char **args, char *NAME, int argc);
 void def_alias(char *name, char *value);
 void print_S_alias(char *names[], int numNames);
 void p_all_alias(void);
+int findAndSet(char* str, const char* searchStr1, const char* searchStr2);
 #endif /* MAIN_H */

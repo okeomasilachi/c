@@ -3,34 +3,47 @@
 /**
  *
 */
-int B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
+void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 {
-	int j, r;
+	int i, j, status = 0, y = 0;
+	char **command = NULL, *tok, *cmdy = NULL;
 
-	av = prs(cmd, 0);
-	if (!execute_builtin_command(av, Name, argc))
+	(void)j;
+	cmdy = strdup(cmd);
+	y = findAndSet(cmdy, "&&", "||");
+	tok = strtok(cmd, "&&||");
+	while (tok != NULL)
 	{
-		r = execute_command(av, environ, 0, Name, argc);
-	}
-
-	for (j = 0; av[j] != NULL; j++)
-		free(av[j]);
-	free(av);
-
-	/*for (i = 0; command[i] != NULL; i++)
-	{
-		av = prs(command[i], 0);
-		if (!execute_builtin_command(av, Name, argc))
+		command = prs(tok, 1);
+		for (i = 0; command[i] != NULL; i++)
 		{
-			r = execute_command(av, environ, 0, Name, argc);
+			/*if (av != NULL)
+			{
+				for (j = 0; av[j] != NULL; j++)
+					free(av[i]);
+				free(av);
+			}*/
+			av = prs(command[i], 0);
+			if ((status = execute_builtin_command(av,Name,argc)) != 0)
+			{
+				status = execute_command(av, environ,0,Name,argc);
+			}
 		}
-
-		for (j = 0; av[j] != NULL; j++)
-			free(av[j]);
-		free(av);
-	}*/
-	return (r);
+		if (y == 1)
+		{
+			if (status != 0)
+				break;
+		}
+		if (y == 2)
+		{
+			if (status == 0)
+				break;
+		}
+		y = findAndSet(NULL,"&&", "||");
+		tok = strtok(NULL, "&&||");
+	}
 }
+
 
 /**
  * 
@@ -85,11 +98,13 @@ int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 	pid_t child_pid;
 	int status;
 	ec = find_executable(args[n]);
-	if (ec == NULL)
+	if (!ec)
 	{
 		pf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, args[n]);
+		return (EXIT_FAILURE);
 	}
-	else
+
+	if (ec)
 	{
 		child_pid = fork();
 		if (child_pid == -1)
@@ -98,7 +113,7 @@ int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 		else if (child_pid == 0)
 		{
 			execve(ec, args, envp);
-			exit(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		}
 		else
 		{
@@ -108,8 +123,6 @@ int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 				return (WEXITSTATUS(status));
 			}
 		}
-
-		return (-1);
 	}
 	return (-1);
 }

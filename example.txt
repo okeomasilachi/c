@@ -1,4 +1,2 @@
-ls
-pwd
-env ; ls -l
-ls -a
+
+ls /hbtn || ls /hbtn || ls /hbtn || ls /var || ls /var

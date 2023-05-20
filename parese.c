@@ -16,7 +16,7 @@ char **prs(char *command, size_t del_n)
 		dl = ";\n";
 	
 	if (del_n == 2)
-		dl = "&&\\";
+		dl = "&|";
 
 	if (command)
 	{
@@ -71,10 +71,10 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 		if (strcmp(args[0], built_in_commands[i].name) == 0)
 		{
 			built_in_commands[i].function(args, NAME, argc);
-			return (1); /* Command executed */
+			return (0); /* Command executed */
 		}
 	}
-	return (0); /* Not a built-in command */
+	return (1); /* Not a built-in command */
 }
 
 /* Define a global buffer to hold input read from standard input*/

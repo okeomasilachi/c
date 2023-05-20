@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv)
 {
-	char *cmd = NULL, **av = NULL, *Name = argv[0], **command = NULL;
+	char *cmd = NULL, **av = NULL, *Name = argv[0];
 	bool int_active = isatty(STDIN_FILENO);
 
 
@@ -22,19 +22,15 @@ int main(int argc, char **argv)
 		{
 			pf(STDOUT_FILENO, "T_O_$ ");
 			cmd = _getline();
-			command = prs(cmd, 1);
-			B_exc(argc, Name, command, av, environ);
+			B_exc(argc, Name, cmd, av, environ);
 		}
-		free(cmd), free(Name), free(av), free(command);
+		free(cmd), free(Name), free(av);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		cmd = _getline();
-		command = prs(cmd, 1);
-		B_exc(argc, Name, command, av, environ);
-			
-		free(command), free(av);
+		B_exc(argc, Name, cmd, av, environ);
 	}
 
 	return 0;
