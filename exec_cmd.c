@@ -6,12 +6,13 @@
 void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 {
 	int i, j, status = 0, y = 0;
-	char **command = NULL, *tok, *cmdy = NULL;
+	char **command = NULL, *tok;
+	Tokenizer token;
 
 	(void)j;
-	cmdy = strdup(cmd);
-	y = findAndSet(cmdy, "&&", "||");
-	tok = strtok(cmd, "&&||");
+	y = findAndSet(cmd, "&&", "||");
+	f_tokenizer(&token, cmd);
+	tok = s_tok(&token, "&&||");
 	while (tok != NULL)
 	{
 		command = prs(tok, 1);
@@ -40,7 +41,7 @@ void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 				break;
 		}
 		y = findAndSet(NULL,"&&", "||");
-		tok = strtok(NULL, "&&||");
+		tok = s_tok(&token, "&&||");
 	}
 }
 

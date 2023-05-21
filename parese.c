@@ -15,9 +15,6 @@ char **prs(char *command, size_t del_n)
 	if (del_n == 1)
 		dl = ";\n";
 	
-	if (del_n == 2)
-		dl = "&|";
-
 	if (command)
 	{
 		com_cpy = strdup(command);
