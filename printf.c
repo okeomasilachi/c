@@ -1,10 +1,13 @@
 #include "main.h"
 
+/**
+ * 
+*/
 void pf(int stream, const char* format, ...)
 {
 	va_list args;
+
 	va_start(args, format);
-	
 	while (*format != '\0')
 	{
 		if (*format == '%')

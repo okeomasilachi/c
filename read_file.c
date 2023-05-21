@@ -25,19 +25,19 @@ char *read_lines(int fd)
 	bytes_read = read(fd, buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
-		file_contents = realloc(file_contents, file_size + bytes_read + 1);
+		file_contents = _realloc(file_contents, file_size + bytes_read + 1);
 		if (file_contents == NULL)
 		{
 			close(fd);
 			return (NULL);
 		}
-		memcpy(file_contents + file_size, buffer, bytes_read);
+		_memcpy(file_contents + file_size, buffer, bytes_read);
 		file_size += bytes_read;
 		bytes_read = read(fd, buffer, sizeof(buffer));
 	}
 	if (file_size > 0)
 	{
-		file_contents = realloc(file_contents, file_size + 1);
+		file_contents = _realloc(file_contents, file_size + 1);
 		if (file_contents == NULL)
 		{
 			close(fd);

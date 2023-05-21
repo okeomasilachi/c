@@ -37,7 +37,7 @@ char **prs(char *command, size_t del_n)
 			count++;
 		}
 		av[count] = NULL;
-		free(com_cpy);
+		_free(1, com_cpy);
 		com_cpy = NULL;
 		count = 0, cnt = 0;
 	}
@@ -130,8 +130,8 @@ char *_getline(void)
 		if (buffer[buffer_pos] == '\n')
 		{
 			buffer_pos++;
-			line = realloc(line, line_size + buffer_pos);
-			memcpy(line + line_size, buffer, buffer_pos);
+			line = _realloc(line, line_size + buffer_pos);
+			_memcpy(line + line_size, buffer, buffer_pos);
 			line_size += buffer_pos;
 			line[line_size - 1] = '\0';
 
@@ -142,8 +142,8 @@ char *_getline(void)
 
 	if (line != NULL)
 	{
-		line = realloc(line, line_size + buffer_pos);
-		memcpy(line + line_size, buffer, buffer_pos);
+		line = _realloc(line, line_size + buffer_pos);
+		_memcpy(line + line_size, buffer, buffer_pos);
 		line_size += buffer_pos;
 		line[line_size - 1] = '\0';
 	}

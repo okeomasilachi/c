@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 			cmd = _getline();
 			B_exc(argc, Name, cmd, av, environ);
 		}
-		free(cmd), free(Name), free(av);
+		_free(3, cmd, Name, av);
 		exit(EXIT_SUCCESS);
 	}
 	else

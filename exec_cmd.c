@@ -18,12 +18,6 @@ void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 		command = prs(tok, 1);
 		for (i = 0; command[i] != NULL; i++)
 		{
-			/*if (av != NULL)
-			{
-				for (j = 0; av[j] != NULL; j++)
-					free(av[i]);
-				free(av);
-			}*/
 			av = prs(command[i], 0);
 			if ((status = execute_builtin_command(av,Name,argc)) != 0)
 			{
@@ -60,7 +54,7 @@ char *find_executable(char *argv)
  	       executable_path = strdup(argv);
  	       return executable_path;
 	}
-	path_env = getenv("PATH");
+	path_env = _getenv("PATH");
 	path_copy = strdup(path_env);
 	f_tokenizer(&Hook, path_copy);
 	token = s_tok(&Hook, ":");
@@ -72,7 +66,7 @@ char *find_executable(char *argv)
 		if (executable_path == NULL)
 		{
 			perror("Memory allocation failed");
-			free(path_copy);
+			_free(1, path_copy);
 			return (NULL);
 		}
 		strcpy(executable_path, token);
@@ -80,13 +74,13 @@ char *find_executable(char *argv)
 		strcat(executable_path, argv);
 		if (access(executable_path, X_OK) == 0)
 		{
-			free(path_copy);
+			_free(1, path_copy);
 			return (executable_path);
 		}
-		free(executable_path);
+		_free(1, executable_path);
 		token = s_tok(&Hook, ":");
 	}
-	free(path_copy);
+	_free(1, path_copy);
 	return (NULL);
 }
 
@@ -98,6 +92,7 @@ int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 	char *ec;
 	pid_t child_pid;
 	int status;
+	
 	ec = find_executable(args[n]);
 	if (!ec)
 	{

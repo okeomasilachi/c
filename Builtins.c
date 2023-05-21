@@ -13,33 +13,29 @@ void cd_command(char **args, char *NAME, int argc)
 	char *ok, *old, *new;
 	int i;
 
-	(void)argc, (void)NAME;
+	(void)argc, (void)NAME, (void)new;
 
 	if (!args[1])
 	{
-		ok = getenv("HOME");
+		ok = _getenv("HOME");
 		chdir(ok);
 		pf(STDOUT_FILENO, "%s\n", ok);
 		return;
 	}
 	if ((i = strcmp(args[1], "-")) == 0)
 	{
-		old = getenv("OLDPWD");
-		new = getenv("PWD");
-		setenv("OLDPWD", new, 1);
-		setenv("PWD", old, 1);
+		old = _getenv("OLDPWD");
+		new = _getenv("PWD");
 		chdir(old);
 		pf(STDOUT_FILENO, "%s\n", old);
 	}
 	else
 	{
-		ok = getenv("PWD");
+		ok = _getenv("PWD");
 		if (chdir(args[1]) == 0)
 		{
-			setenv("OLDPWD", ok, 1);
-			ok = getenv("PWD");
+			ok = _getenv("PWD");
 			pf(STDOUT_FILENO, "%s\n", ok);
-			setenv("PWD", ok, 1);
 		}
 		else
 			pf(STDERR_FILENO, "%s: %d: %s: can't cd to %s\n", NAME, argc, args[0], args[1]);
@@ -62,7 +58,7 @@ void exit_command(char **args, char *NAME, int argc)
 		exit(EXIT_SUCCESS);
 	else if (args[1] != NULL)
 	{
-		exit(atoi(args[1]));
+		exit(_atoi(args[1]));
 	}
 }
 
@@ -82,7 +78,7 @@ void setenv_command(char **args, char *NAME, int argc)
 		pf(STDERR_FILENO, "setenv: missing argument\n");
 	else
 	{
-		if (setenv(args[1], args[2], 1) != 0)
+		if (_setenv(args[1], args[2], 1) != 0)
 			perror("setenv");
 	}
 }
@@ -103,7 +99,7 @@ void unsetenv_command(char **args,  char *NAME, int argc)
 		pf(STDERR_FILENO, "unsetenv: missing argument\n");
 	else
 	{
-		if (unsetenv(args[1]) != 0)
+		if (_unsetenv(args[1]) != 0)
 			perror("unsetenv");
 	}
 }
