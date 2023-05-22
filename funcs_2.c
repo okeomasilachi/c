@@ -19,23 +19,23 @@ static int environ_size()
 */
 int _updateenv(const char *name, const char *value)
 {
-	size_t name_len = strlen(name), value_len = strlen(value), old_value_len;
+	size_t name_len = _strlen(name), value_len = _strlen(value), old_value_len;
 	char **env = environ, *new_env;
 
 	for (env = environ; *env != NULL; env++)
 	{
-		if (strncmp(name, *env, name_len) == 0 && (*env)[name_len] == '=')
+		if (_strncmp(name, *env, name_len) == 0 && (*env)[name_len] == '=')
 		{
 			old_value_len = _strlen(*env + name_len + 1);
 			if (value_len <= old_value_len)
-				strcpy(*env + name_len + 1, value);
+				_strcpy(*env + name_len + 1, value);
 			else
 			{
 				new_env = (char *)malloc(name_len + value_len + 2);
 				if (new_env == NULL)
 					return -1;
-				strcpy(new_env, *env);
-				strcpy(new_env + name_len + 1, value);
+				_strcpy(new_env, *env);
+				_strcpy(new_env + name_len + 1, value);
 				free(*env);
 				*env = new_env;
 			}
@@ -60,8 +60,8 @@ int _setenv(const char *name, const char *value, int overwrite)
 	update_result = _updateenv(name, value);
 	if (update_result == 0)
 		return 0;
-	name_len = strlen(name);
-	value_len = strlen(value);
+	name_len = _strlen(name);
+	value_len = _strlen(value);
 	new_environ = (char **)malloc(sizeof(char *) * (environ_size() + 2));
 	if (new_environ == NULL)
 		return -1;
@@ -98,13 +98,13 @@ char *_getenv(const char *name)
 	if (name == NULL || *name == '\0')
 		return NULL;
 
-	name_len = strlen(name);
+	name_len = _strlen(name);
 	for (env = environ; *env != NULL; env++)
 	{
 		env_var = *env;
 		if (env_var == NULL || *env_var == '\0' || strchr(env_var, '=') == NULL)
 			continue;
-		if (strncmp(name, env_var, name_len) == 0 && env_var[name_len] == '=')
+		if (_strncmp(name, env_var, name_len) == 0 && env_var[name_len] == '=')
 			return &(env_var[name_len + 1]);
 	}
 	return NULL;
@@ -120,11 +120,11 @@ int _unsetenv(const char *name)
 
 	if (name == NULL || name[0] == '\0' || strchr(name, '=') != NULL)
 		return -1;
-	name_len = strlen(name);
+	name_len = _strlen(name);
 	env = environ;
 	while (*env != NULL)
 	{
-		if (strncmp(name, *env, name_len) == 0 && (*env)[name_len] == '=')
+		if (_strncmp(name, *env, name_len) == 0 && (*env)[name_len] == '=')
 			break;
 		env++;
 	}

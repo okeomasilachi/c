@@ -17,7 +17,7 @@ char **prs(char *command, size_t del_n)
 	
 	if (command)
 	{
-		com_cpy = strdup(command);
+		com_cpy = _strdup(command);
 		f_tokenizer(&tokens, command);
 		tok = s_tok(&tokens, dl);
 		while (tok)
@@ -31,8 +31,8 @@ char **prs(char *command, size_t del_n)
 		tok = s_tok(&tokens, dl);
 		while (tok)
 		{
-			av[count] = malloc(sizeof(char) * (strlen(tok) + 1));
-			strcpy(av[count], tok);
+			av[count] = malloc(sizeof(char) * (_strlen(tok) + 1));
+			_strcpy(av[count], tok);
 			tok = s_tok(&tokens, dl);
 			count++;
 		}
@@ -65,7 +65,7 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 
 	for (i = 0; i < num_built_in_commands; i++)
 	{
-		if (strcmp(args[0], built_in_commands[i].name) == 0)
+		if (_strcmp(args[0], built_in_commands[i].name) == 0)
 		{
 			built_in_commands[i].function(args, NAME, argc);
 			return (0); /* Command executed */

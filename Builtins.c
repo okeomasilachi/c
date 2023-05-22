@@ -22,7 +22,7 @@ void cd_command(char **args, char *NAME, int argc)
 		pf(STDOUT_FILENO, "%s\n", ok);
 		return;
 	}
-	if ((i = strcmp(args[1], "-")) == 0)
+	if ((i = _strcmp(args[1], "-")) == 0)
 	{
 		old = _getenv("OLDPWD");
 		new = _getenv("PWD");
@@ -105,7 +105,12 @@ void unsetenv_command(char **args,  char *NAME, int argc)
 }
 
 /**
- * 
+ * _command - changes directory to the specified path
+ * @args: arguments to work with
+ * @NAME: name of the compiled program
+ * @argc: argument count
+ *
+ * Return: void
 */
 void help_command(char **args,  char *NAME, int argc)
 {

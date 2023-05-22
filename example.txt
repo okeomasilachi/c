@@ -1,2 +1,3 @@
-
-ls /hbtn || ls /hbtn || ls /hbtn || ls /var || ls /var
+ls 
+ls -l && PWD
+ls #|| pwd

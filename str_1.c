@@ -93,7 +93,7 @@ int _strcmp(char *s1, char *s2)
  * Return: success
  */
 
-char *_strstr(char *haystack, char *needle)
+char *_strstr(char *haystack, const char *needle)
 {
 	int i;
 

@@ -5,11 +5,11 @@
 */
 void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 {
-	int i, j, status = 0, y = 0;
+	int i, status = 0, y = 0;
 	char **command = NULL, *tok;
 	Tokenizer token;
 
-	(void)j;
+	find_char(cmd, '#');
 	y = findAndSet(cmd, "&&", "||");
 	f_tokenizer(&token, cmd);
 	tok = s_tok(&token, "&&||");
@@ -51,17 +51,17 @@ char *find_executable(char *argv)
 
 	if (access(argv, X_OK) == 0)
  	{
- 	       executable_path = strdup(argv);
+ 	       executable_path = _strdup(argv);
  	       return executable_path;
 	}
 	path_env = _getenv("PATH");
-	path_copy = strdup(path_env);
+	path_copy = _strdup(path_env);
 	f_tokenizer(&Hook, path_copy);
 	token = s_tok(&Hook, ":");
 	while (token)
 	{
-		token_len = strlen(token);
-		exec_name_len = strlen(argv);
+		token_len = _strlen(token);
+		exec_name_len = _strlen(argv);
 		executable_path = (char *)malloc((token_len + exec_name_len + 2) * sizeof(char));
 		if (executable_path == NULL)
 		{
@@ -69,9 +69,9 @@ char *find_executable(char *argv)
 			_free(1, path_copy);
 			return (NULL);
 		}
-		strcpy(executable_path, token);
-		strcat(executable_path, "/");
-		strcat(executable_path, argv);
+		_strcpy(executable_path, token);
+		_strcat(executable_path, "/");
+		_strcat(executable_path, argv);
 		if (access(executable_path, X_OK) == 0)
 		{
 			_free(1, path_copy);

@@ -5,6 +5,7 @@
  *
 */
 void *_memcpy(void *dest, const void *src, size_t n)
+
 {
 	size_t i;
 	unsigned char *destination;
@@ -72,7 +73,7 @@ int _atoi(const char *nptr)
 	sign = 1;
 	i = 0;
 	
-	while (isspace(nptr[i]))
+	while (_isspace(nptr[i]))
 		i++;
 
 	if (nptr[i] == '-' || nptr[i] == '+')
@@ -80,7 +81,7 @@ int _atoi(const char *nptr)
 		sign = (nptr[i] == '-') ? -1 : 1;
 		i++;
 	}
-	while (isdigit(nptr[i]))
+	while (_isdigit(nptr[i]))
 	{
 		digit = nptr[i] - '0';
 		if (result > (INT_MAX - digit) / 10)
@@ -110,7 +111,7 @@ void *_realloc(void *ptr, size_t size)
 	if (new_ptr == NULL)
 		return NULL;
 
-	memcpy(new_ptr, ptr, size);
+	_memcpy(new_ptr, ptr, size);
 	free(ptr);
 	return new_ptr;
 }
@@ -126,7 +127,7 @@ void _free(int count, ...)
 
 	if (count <= 0)
 	{
-		pf(STDERR_FILENO, "Invalid number of arguments for custom_free.\n");
+		pf(STDERR_FILENO, "Invalid number of arguments for _free.\n");
 		return;
 	}
 	va_start(args, count);
@@ -137,7 +138,7 @@ void _free(int count, ...)
 		if (ptr != NULL)
 			free(ptr);
 		else
-			pf(STDERR_FILENO, "NULL pointer encountered in custom_free.\n");
+			pf(STDERR_FILENO, "NULL pointer encountered in _free.\n");
 	}
 	va_end(args);
 }

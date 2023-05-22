@@ -15,7 +15,7 @@ int _isdigit(int c)
 		return (0);
 }
 
-int _strlen(char *s)
+int _strlen(const char *s)
 {
 	int length;
 
@@ -40,10 +40,10 @@ char *_strdup(const char *s)
 
 	if (s == NULL)
 		return NULL;
-	length = strlen(s);
+	length = _strlen(s);
 	duplicate = (char *) malloc((length + 1) * sizeof(char));
 	if (duplicate != NULL)
-		strcpy(duplicate, s);
+		_strcpy(duplicate, s);
 
 	return duplicate;
 }

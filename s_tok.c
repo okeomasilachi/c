@@ -28,7 +28,7 @@ char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 	}
 	tokenizer->nxt_tok_st = tokenizer->cur_tok_st;
 	/* Find the end of the current token */
-	tokenizer->nxt_tok_st += strcspn(tokenizer->nxt_tok_st, delimiters);
+	tokenizer->nxt_tok_st += _strcspn(tokenizer->nxt_tok_st, delimiters);
 	if (*tokenizer->nxt_tok_st != '\0')
 	{
 		*tokenizer->nxt_tok_st = '\0';
@@ -42,6 +42,24 @@ char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 	tokenizer->cur_tok_st = tokenizer->nxt_tok_st;
 
 	return (token);
+}
+
+int find_char(char *str, char search)
+{
+	char *str_cpy = strchr(str, search);
+	
+	if (str == NULL || search == '\0')
+	{
+		dprintf(STDERR_FILENO, "find_char: missing arguments");
+		return (-1);
+	}
+	
+	if (str_cpy != NULL)
+	{
+		*str_cpy = '\0';
+		return (0);
+	}
+	return (1);
 }
 
 int findAndSet(char* str, const char* searchStr1, const char* searchStr2)
@@ -60,21 +78,44 @@ int findAndSet(char* str, const char* searchStr1, const char* searchStr2)
 		pf(STDERR_FILENO, "Invalid input. Please provide a string to search.\n");
 		return -1;
 	}
-	result1 = searchStr1 != NULL ? strstr(currentPosition, searchStr1) : NULL;
-	result2 = searchStr2 != NULL ? strstr(currentPosition, searchStr2) : NULL;
+	result1 = searchStr1 != NULL ? _strstr(currentPosition, searchStr1) : NULL;
+	result2 = searchStr2 != NULL ? _strstr(currentPosition, searchStr2) : NULL;
 	if (result1 == NULL && result2 == NULL)
 		return -1;
 
 	if (result1 == NULL || (result2 != NULL && result2 < result1))
 	{
-		currentPosition = result2 + strlen(searchStr2);
+		currentPosition = result2 + _strlen(searchStr2);
 		setValue = 2;
 	}
 	else
 	{
-		currentPosition = result1 + strlen(searchStr1);
+		currentPosition = result1 + _strlen(searchStr1);
 		setValue = 1;
 	}
 	return setValue;
+}
+
+/**
+ * _strcpy - copies string
+ *
+ * @dest: updatd string
+ * @src: string copy
+ *
+ * Return: returns dest
+ */
+
+char *_strcpy(char *dest, const char *src)
+{
+	int i = 0;
+
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	
+	return (dest);
 }
 
