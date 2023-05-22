@@ -72,7 +72,6 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 	size_t read;
 
 	cmd = read_file(argv[1]);
-	/* Remove trailing newline character, if any */
 	read = _strlen(cmd);
 	if (read > 0 && cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';

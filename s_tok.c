@@ -1,7 +1,11 @@
 #include "main.h"
 
 /**
+ * f_tokenizer - the initializer for string tokenization
+ * @tokenizer: struct for storing the tokens
+ * @input_string: string to tokenize
  *
+ * Return: void
 */
 void f_tokenizer(Tokenizer *tokenizer, char *input_string)
 {
@@ -10,7 +14,12 @@ void f_tokenizer(Tokenizer *tokenizer, char *input_string)
 }
 
 /**
+ * s_tok - function for tokenizing strings
+ * @tokenizer: struct where token are stored
+ * @delimeters: the delimeters for the tokenization
  *
+ * Return: pointer to token
+ * error: NULL if no more tokens are found
 */
 char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 {
@@ -44,6 +53,14 @@ char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 	return (token);
 }
 
+/**
+ * find_char - finds the specified character in a string
+ * @str: string to be searched
+ * @search: character to search for
+ *
+ * Return: 0 on success:
+ * error: non zero value
+*/
 int find_char(char *str, char search)
 {
 	char *str_cpy = strchr(str, search);
@@ -62,6 +79,14 @@ int find_char(char *str, char search)
 	return (1);
 }
 
+/**
+ * findAndSet - find two strings in a particular string
+ * @str: string to be searched
+ * @searchStr1: first string to search for
+ * @searchStr2: second string to search for
+ *
+ * Return: number signifying the case found at a point
+*/
 int findAndSet(char* str, const char* searchStr1, const char* searchStr2)
 {
 	static char* currentPosition = NULL;
@@ -76,12 +101,12 @@ int findAndSet(char* str, const char* searchStr1, const char* searchStr2)
 	if (currentPosition == NULL)
 	{
 		pf(STDERR_FILENO, "Invalid input. Please provide a string to search.\n");
-		return -1;
+		return (-1);
 	}
 	result1 = searchStr1 != NULL ? _strstr(currentPosition, searchStr1) : NULL;
 	result2 = searchStr2 != NULL ? _strstr(currentPosition, searchStr2) : NULL;
 	if (result1 == NULL && result2 == NULL)
-		return -1;
+		return (-1);
 
 	if (result1 == NULL || (result2 != NULL && result2 < result1))
 	{
@@ -93,7 +118,7 @@ int findAndSet(char* str, const char* searchStr1, const char* searchStr2)
 		currentPosition = result1 + _strlen(searchStr1);
 		setValue = 1;
 	}
-	return setValue;
+	return (setValue);
 }
 
 /**

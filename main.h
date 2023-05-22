@@ -23,9 +23,11 @@ extern char **environ;
 /* for tokenization of strings */
 
 /**
- * 
+ * okeoma - structs fro the strtok funtion
+ * @cur_tok_st: holds the current token
+ * @nxt_tok_st: holds the next token
 */
-typedef struct
+typedef struct okeoma
 {
 	char *cur_tok_st;
 	char *nxt_tok_st;
@@ -52,7 +54,9 @@ void help_command(char **args, char *NAME, int argc);
 int execute_builtin_command(char **args, char *NAME, int argc);
 
 /**
- * 
+ * built_in -
+ * @name: name of the built in command
+ * @function: function pointer to the command
 */
 struct built_in
 {

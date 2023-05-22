@@ -1,7 +1,11 @@
 #include "main.h"
 
 /**
- * 
+ * pf - minature dprintf function
+ * @stream: stream to write to
+ * @format: format to write
+ *
+ * Return: void
 */
 void pf(int stream, const char* format, ...)
 {
@@ -42,7 +46,11 @@ void pf(int stream, const char* format, ...)
 }
 
 /**
- * 
+ * print_integer - prints integer
+ * @num: integer to print
+ * @n: stream to print to
+ *
+ * Return: void
 */
 void print_integer(int num, int n)
 {
@@ -72,7 +80,11 @@ void print_integer(int num, int n)
 }
 
 /**
- * 
+ * write_string - writes a string to the specified stream
+ * @n: stream to write to
+ * @s: string to write
+ *
+ * Return: void
 */
 void write_string(int n, const char *s)
 {
@@ -93,7 +105,10 @@ void print_string(char *s, int n)
 }
 
 /**
- * 
+ * _isspace - checks if a character is a space
+ * @c: character to check
+ *
+ * Return: 1 if space
 */
 int _isspace(int c)
 {

@@ -1,7 +1,14 @@
 #include "main.h"
 
 /**
+ * B_exc - function handles all command processing
+ * @argc: argument count
+ * @Name: name of the compiled program [argv[0]]
+ * @cmd: commandline input
+ * @av: parsed commands
+ * @environ: environmental variable
  *
+ * Return: void
 */
 void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 {
@@ -41,7 +48,11 @@ void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 
 
 /**
- * 
+ * find_executabel - finds the path of an execuitable if it exist
+ * @argv: variable to search for
+ *
+ * Return: pointer to the variable on success
+ * error: NULL
 */
 char *find_executable(char *argv)
 {
@@ -52,7 +63,7 @@ char *find_executable(char *argv)
 	if (access(argv, X_OK) == 0)
  	{
  	       executable_path = _strdup(argv);
- 	       return executable_path;
+ 	       return (executable_path);
 	}
 	path_env = _getenv("PATH");
 	path_copy = _strdup(path_env);
@@ -85,7 +96,15 @@ char *find_executable(char *argv)
 }
 
 /**
- * 
+ * execute_command - executes the command
+ * @args: commands to be eexcuited;
+ * @envp: environmental variable
+ * @n: set for executable name [argv[0]]
+ * @Name: name of the compiled program
+ * @argc: argument count
+ *
+ * Return: 0 on success
+ * error: non zero value
 */
 int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
 {

@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * main - entry point of the program
+ * @argc: argument count
+ * @argv: argument variable
+ *
+ * Return: 0 on success
+ * error: non zero value
+*/
 int main(int argc, char **argv)
 {
 	char *cmd = NULL, **av = NULL, *Name = argv[0];
@@ -20,7 +28,7 @@ int main(int argc, char **argv)
 	{
 		while (true)
 		{
-			pf(STDOUT_FILENO, "T_O_$ ");
+			pf(STDOUT_FILENO, "($) ");
 			cmd = _getline();
 			B_exc(argc, Name, cmd, av, environ);
 		}

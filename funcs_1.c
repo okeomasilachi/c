@@ -2,7 +2,12 @@
 
 
 /**
+ * _memcpy - copies the memory address of a string
+ * @dest: destination of the copied address
+ * @src: the string memory to be copied
+ * @n: number of bytes to copy
  *
+ * Return: void
 */
 void *_memcpy(void *dest, const void *src, size_t n)
 {
@@ -26,7 +31,12 @@ void *_memcpy(void *dest, const void *src, size_t n)
 
 
 /**
+ * _memmove - moves a memory address
+ * @dest: destination to move to
+ * @src: string to move from
+ * @n: number of bytes to move
  *
+ * Return: void
 */
 void *_memmove(void *dest, const void *src, size_t n)
 {
@@ -58,9 +68,11 @@ void *_memmove(void *dest, const void *src, size_t n)
 
 
 /**
+ * _atoi - converts string to integer
+ * @nptr: string to be converted
  *
+ * Return: void
 */
-
 int _atoi(const char *nptr)
 {
 	int result, sign, i, digit;
@@ -92,7 +104,12 @@ int _atoi(const char *nptr)
 }
 
 /**
+ * _realloc - reallocates memory for a buffer
+ * @ptr: memory to reallocate
+ * @size: size to reallocate
  *
+ * Return: pointer to newly allocated memory
+ * error: NULL
 */
 void *_realloc(void *ptr, size_t size)
 {
@@ -116,7 +133,10 @@ void *_realloc(void *ptr, size_t size)
 }
 
 /**
+ * _free - free n number of dynamically allocated memory
+ * @count: number of memory to free
  *
+ * Return: void
 */
 void _free(int count, ...)
 {

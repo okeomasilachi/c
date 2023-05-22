@@ -1,7 +1,12 @@
 #include "main.h"
 
 /**
- * 
+ * prs - parses input command to tokens
+ * @command: command to be parsed
+ * @del_n: sets delimiter to requirments
+ *
+ * Return: pointer the array of parsed commands
+ * error: NULL
 */
 char **prs(char *command, size_t del_n)
 {
@@ -45,7 +50,7 @@ char **prs(char *command, size_t del_n)
 }
 
 /**
- * 
+ * built_in_commands - Built in's of the shell
 */
 struct built_in built_in_commands[] = {
 	{"cd", cd_command},
@@ -56,7 +61,13 @@ struct built_in built_in_commands[] = {
 };
 
 /**
- * 
+ * execute_builtin_command - executes built-in
+ * @args: arguments to pass to the command
+ * @NAME: name of the compiled program
+ * @argc: argument count
+ *
+ * Return: 0 on success
+ * error: 1 on error
 */
 int execute_builtin_command(char **args,  char *NAME, int argc)
 {

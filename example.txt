@@ -1,3 +1,2 @@
-ls 
-ls -l && PWD
-ls #|| pwd
+/bin/ls
+/bin/ls

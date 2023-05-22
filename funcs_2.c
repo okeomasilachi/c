@@ -1,7 +1,9 @@
 #include "main.h"
 
 /**
- * 
+ * environ_size - gets the size of the current environ
+ *
+ * Return: the size;
 */
 static int environ_size()
 {
@@ -15,7 +17,12 @@ static int environ_size()
 }
 
 /**
+ * _updateenv - updates the environ
+ * @name: name of the new variable
+ * @value: value of the new variable
  *
+ * Return: 0 on success
+ * error: -1 is returned
 */
 int _updateenv(const char *name, const char *value)
 {
@@ -45,6 +52,15 @@ int _updateenv(const char *name, const char *value)
 	return (-1);
 }
 
+/**
+ * _setenv - sets the environ of a system
+ * @name: name of the varable to set
+ * @value: value to set to
+ * @overrite: overites if the name exist
+ *
+ * Return: 0 on success
+ * error: -1 on failure
+*/
 int _setenv(const char *name, const char *value, int overwrite)
 {
 	size_t name_len, value_len, new_var_len;
@@ -88,7 +104,11 @@ int _setenv(const char *name, const char *value, int overwrite)
 
 
 /**
+ * _getenv - gets the value of a specified environ
+ * @name: name of variable to get
  *
+ * Return: the value of the specified variable
+ * error: NULL on error
 */
 char *_getenv(const char *name)
 {
@@ -111,7 +131,11 @@ char *_getenv(const char *name)
 }
 
 /**
+ * _unsetenv - unset an environmental variable if it exist
+ * @name: varable to unset
  *
+ * Return: 0 on success
+ * error: -1 on error
 */
 int _unsetenv(const char *name)
 {
@@ -129,12 +153,12 @@ int _unsetenv(const char *name)
 		env++;
 	}
 	if (*env == NULL)
-		return 0;
+		return (0);
 	shift_env = env;
 	while (*shift_env != NULL)
 	{
 		*shift_env = *(shift_env + 1);
 		shift_env++;
 	}
-	return 0;
+	return (0);
 }
