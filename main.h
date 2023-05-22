@@ -64,8 +64,8 @@ typedef struct built_in
 } me;
 /*--------------------------------------------------------------------------*/
 void B_exc(int argc, char *Name, char *cmd, char **av, char **environ);
-void read_input(void);
-char *_getline(void);
+void read_input(char *buffer, int *buffer_pos, int *buffer_size);
+char *_getline(char *buffer, int *buffer_pos, int *buffer_size);
 /*--------------------------------------------------------------------------*/
 void pf(int stream, const char *format, ...);
 void write_string(int n, const char *s);
@@ -96,5 +96,6 @@ int _strncmp(const char s1[], const char s2[], size_t n);
 size_t _strcspn(const char *s, const char *reject);
 char *_strcpy(char *dest, const char *src);
 int find_char(char *str, char search);
+
 
 #endif /* MAIN_H */

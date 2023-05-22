@@ -1,5 +1,4 @@
 #include "main.h"
-#include "prs.h"
 
 /**
  * prs - parses input command to tokens
@@ -51,7 +50,18 @@ char **prs(char *command, size_t del_n)
 }
 
 /**
- * execute_builtin_command - executes built-in
+ * struct me - Built in's of the shell
+*/
+me built_in_commands[] = {
+	{"cd", cd_command},
+	{"exit", exit_command},
+	{"setenv", setenv_command},
+	{"unsetenv", unsetenv_command},
+	{"help", help_command},
+};
+
+/**
+ * execute_builtin_command - this function runs built-in
  * @args: arguments to pass to the command
  * @NAME: name of the compiled program
  * @argc: argument count
@@ -61,6 +71,7 @@ char **prs(char *command, size_t del_n)
 */
 int execute_builtin_command(char **args,  char *NAME, int argc)
 {
+
 	int num_built_in_com = sizeof(built_in_commands) / sizeof(struct built_in), i;
 
 	for (i = 0; i < num_built_in_com; i++)
@@ -76,13 +87,17 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 
 /* Define a global buffer to hold input read from standard input*/
 
+char buffer[BUFFER_SIZE];
+int buffer_pos;
+int buffer_size;
+
 /**
  * read_input - reads input from a buffer
  *
  * Return: read inputs
  */
 
-void read_input(void)
+void read_input(char *buffer, int *buffer_pos, int *buffer_size)
 {
 	fflush(stdout);
 
@@ -111,7 +126,7 @@ void read_input(void)
  *Return: the charactersread from the buffer
  */
 
-char *_getline(void)
+char *_getline(char *buffer, int *buffer_pos, int *buffer_size)
 {
 	char *line = NULL;
 	int line_size = 0;
@@ -120,7 +135,7 @@ char *_getline(void)
 	{
 		if (buffer_pos >= buffer_size)
 		{
-			read_input();
+			read_input(buffer, buffer_pos, buffer_size);
 		}
 
 		if (buffer[buffer_pos] == '\n')
@@ -145,4 +160,9 @@ char *_getline(void)
 	}
 
 	return (line);
+}
+
+char *call()
+{
+
 }
