@@ -1,4 +1,5 @@
 #include "main.h"
+#include "prs.h"
 
 /**
  * prs - parses input command to tokens
@@ -19,7 +20,7 @@ char **prs(char *command, size_t del_n)
 
 	if (del_n == 1)
 		dl = ";\n";
-	
+
 	if (command)
 	{
 		com_cpy = _strdup(command);
@@ -50,17 +51,6 @@ char **prs(char *command, size_t del_n)
 }
 
 /**
- * built_in_commands - Built in's of the shell
-*/
-struct built_in built_in_commands[] = {
-	{"cd", cd_command},
-	{"exit", exit_command},
-	{"setenv", setenv_command},
-	{"unsetenv", unsetenv_command},
-	{"help", help_command},
-};
-
-/**
  * execute_builtin_command - executes built-in
  * @args: arguments to pass to the command
  * @NAME: name of the compiled program
@@ -71,9 +61,9 @@ struct built_in built_in_commands[] = {
 */
 int execute_builtin_command(char **args,  char *NAME, int argc)
 {
-	int num_built_in_commands = sizeof(built_in_commands) / sizeof(struct built_in), i;
+	int num_built_in_com = sizeof(built_in_commands) / sizeof(struct built_in), i;
 
-	for (i = 0; i < num_built_in_commands; i++)
+	for (i = 0; i < num_built_in_com; i++)
 	{
 		if (_strcmp(args[0], built_in_commands[i].name) == 0)
 		{
@@ -85,10 +75,6 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 }
 
 /* Define a global buffer to hold input read from standard input*/
-
-static char buffer[BUFFER_SIZE];
-static int buffer_pos;
-static int buffer_size;
 
 /**
  * read_input - reads input from a buffer

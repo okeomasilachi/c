@@ -16,7 +16,7 @@ void f_tokenizer(Tokenizer *tokenizer, char *input_string)
 /**
  * s_tok - function for tokenizing strings
  * @tokenizer: struct where token are stored
- * @delimeters: the delimeters for the tokenization
+ * @delimiters: the delimeters for the tokenization
  *
  * Return: pointer to token
  * error: NULL if no more tokens are found
@@ -64,13 +64,13 @@ char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 int find_char(char *str, char search)
 {
 	char *str_cpy = strchr(str, search);
-	
+
 	if (str == NULL || search == '\0')
 	{
 		dprintf(STDERR_FILENO, "find_char: missing arguments");
 		return (-1);
 	}
-	
+
 	if (str_cpy != NULL)
 	{
 		*str_cpy = '\0';
@@ -87,12 +87,12 @@ int find_char(char *str, char search)
  *
  * Return: number signifying the case found at a point
 */
-int findAndSet(char* str, const char* searchStr1, const char* searchStr2)
+int findAndSet(char *str, const char *searchStr1, const char *searchStr2)
 {
-	static char* currentPosition = NULL;
-	static int setValue = 0;
+	static char *currentPosition;
+	static int setValue;
 	char *result1, *result2;
-	
+
 	if (str != NULL)
 	{
 		currentPosition = str;
@@ -140,7 +140,7 @@ char *_strcpy(char *dest, const char *src)
 		i++;
 	}
 	dest[i] = '\0';
-	
+
 	return (dest);
 }
 

@@ -5,11 +5,11 @@
  *
  * Return: the size;
 */
-static int environ_size()
+static int environ_size(void)
 {
 	int count = 0;
 	char **env;
-	
+
 	for (env = environ; *env != NULL; env++)
 		count++;
 
@@ -56,7 +56,7 @@ int _updateenv(const char *name, const char *value)
  * _setenv - sets the environ of a system
  * @name: name of the varable to set
  * @value: value to set to
- * @overrite: overites if the name exist
+ * @overwrite: overites if the name exist
  *
  * Return: 0 on success
  * error: -1 on failure

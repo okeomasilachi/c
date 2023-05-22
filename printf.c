@@ -7,7 +7,7 @@
  *
  * Return: void
 */
-void pf(int stream, const char* format, ...)
+void pf(int stream, const char *format, ...)
 {
 	va_list args;
 
@@ -22,12 +22,14 @@ void pf(int stream, const char* format, ...)
 				case 'd':
 				{
 					int num = va_arg(args, int);
+
 					print_integer(num, stream);
 					break;
 				}
 				case 's':
 				{
-					char* str = va_arg(args, char*);
+					char *str = va_arg(args, char*);
+
 					print_string(str, stream);
 					break;
 				}
@@ -56,25 +58,25 @@ void print_integer(int num, int n)
 {
 	char buffer[32];
 	int i = 0, j;
-	
+
 	if (num == 0)
 	{
 		write(n, "0", 1);
 		return;
 	}
-	
+
 	if (num < 0)
 	{
 		write(n, "-", 1);
 		num = -num;
 	}
-	
+
 	while (num != 0)
 	{
 		buffer[i++] = '0' + (num % 10);
 		num /= 10;
 	}
-	
+
 	for (j = i - 1; j >= 0; j--)
 		write(n, &buffer[j], 1);
 }

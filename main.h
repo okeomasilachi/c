@@ -23,7 +23,7 @@ extern char **environ;
 /* for tokenization of strings */
 
 /**
- * okeoma - structs fro the strtok funtion
+ * struct okeoma - structs fro the strtok funtion
  * @cur_tok_st: holds the current token
  * @nxt_tok_st: holds the next token
 */
@@ -33,7 +33,6 @@ typedef struct okeoma
 	char *nxt_tok_st;
 } Tokenizer, o_tok;
 
-/* call the f_tokenizer function before using s_tok function passing in the parameters */
 void f_tokenizer(Tokenizer *tokenizer, char *input_string);
 char *s_tok(Tokenizer *tokenizer, const char *delimiters);
 char **prs(char *command, size_t del_n);
@@ -54,15 +53,15 @@ void help_command(char **args, char *NAME, int argc);
 int execute_builtin_command(char **args, char *NAME, int argc);
 
 /**
- * built_in -
+ * struct built_in - struct for built in commands
  * @name: name of the built in command
  * @function: function pointer to the command
 */
-struct built_in
+typedef struct built_in
 {
 	char *name;
 	void (*function)(char **args, char *NAME, int argc);
-};
+} me;
 /*--------------------------------------------------------------------------*/
 void B_exc(int argc, char *Name, char *cmd, char **av, char **environ);
 void read_input(void);
@@ -72,7 +71,7 @@ void pf(int stream, const char *format, ...);
 void write_string(int n, const char *s);
 void print_integer(int num, int n);
 void print_string(char *s, int n);
-int findAndSet(char* str, const char* searchStr1, const char* searchStr2);
+int findAndSet(char *str, const char *searchStr1, const char *searchStr2);
 /*--------------------------------------------------------------------------*/
 void *_memcpy(void *dest, const void *src, size_t n);
 void *_memmove(void *dest, const void *src, size_t n);

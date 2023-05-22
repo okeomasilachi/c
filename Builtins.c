@@ -11,7 +11,6 @@
 void cd_command(char **args, char *NAME, int argc)
 {
 	char *ok, *old, *new;
-	int i;
 
 	(void)argc, (void)NAME, (void)new;
 
@@ -21,7 +20,7 @@ void cd_command(char **args, char *NAME, int argc)
 		chdir(ok);
 		return;
 	}
-	if ((i = _strcmp(args[1], "-")) == 0)
+	if (_strcmp(args[1], "-") == 0)
 	{
 		old = _getenv("OLDPWD");
 		chdir(old);
@@ -37,7 +36,7 @@ void cd_command(char **args, char *NAME, int argc)
 			pf(STDOUT_FILENO, "%s\n", ok);
 		}
 		else
-			pf(STDERR_FILENO, "%s: %d: %s: can't cd to %s\n", NAME, argc, args[0], args[1]);
+			pf(2, "%s: %d: %s: can't cd to %s\n", NAME, argc, args[0], args[1]);
 	}
 }
 
@@ -83,7 +82,7 @@ void setenv_command(char **args, char *NAME, int argc)
 }
 
 /**
- * _command - changes directory to the specified path
+ * unsetenv_command - unsets an environmental variable
  * @args: arguments to work with
  * @NAME: name of the compiled program
  * @argc: argument count
@@ -104,7 +103,7 @@ void unsetenv_command(char **args,  char *NAME, int argc)
 }
 
 /**
- * _command - changes directory to the specified path
+ * help_command - print help
  * @args: arguments to work with
  * @NAME: name of the compiled program
  * @argc: argument count
@@ -117,7 +116,7 @@ void help_command(char **args,  char *NAME, int argc)
 
 	if (args[1] == NULL)
 	{
-		pf(STDOUT_FILENO, "	   	This is a simple shell program\n");
+		pf(STDOUT_FILENO, "		This is a simple shell program\n");
 		pf(STDOUT_FILENO, "Authors: Ebiri ThankGod, Onyedibia Okeomasilachi.\n");
 	}
 }

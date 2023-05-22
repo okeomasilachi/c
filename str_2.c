@@ -60,6 +60,7 @@ char *_strdup(const char *s)
  * _strncmp - compears n bytes of a sring
  * @s1: string to match
  * @s2: string to compare with
+ * @n: number of bytes
  *
  * Return: the point where the match case is found
 */

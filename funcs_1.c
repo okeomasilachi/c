@@ -26,7 +26,7 @@ void *_memcpy(void *dest, const void *src, size_t n)
 	for (i = 0; i < n; i++)
 		destination[i] = source[i];
 
-    return (dest);
+	return (dest);
 }
 
 
@@ -49,7 +49,7 @@ void *_memmove(void *dest, const void *src, size_t n)
 
 	destination = (unsigned char *)dest;
 	source = (const unsigned char *)src;
-	
+
 	if (destination == source)
 		return (dest);
 
@@ -79,11 +79,11 @@ int _atoi(const char *nptr)
 
 	if (nptr == NULL)
 		return (0);
-	
+
 	result = 0;
 	sign = 1;
 	i = 0;
-	
+
 	while (_isspace(nptr[i]))
 		i++;
 
@@ -96,7 +96,7 @@ int _atoi(const char *nptr)
 	{
 		digit = nptr[i] - '0';
 		if (result > (INT_MAX - digit) / 10)
-			return (sign == 1) ? INT_MAX : INT_MIN;
+			return (sign == 1 ? INT_MAX : INT_MIN);
 		result = result * 10 + digit;
 		i++;
 	}
@@ -153,7 +153,7 @@ void _free(int count, ...)
 	for (i = 0; i < count; i++)
 	{
 		ptr = va_arg(args, void *);
-		
+
 		if (ptr != NULL)
 			free(ptr);
 		else

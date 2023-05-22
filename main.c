@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	}
 	if (argv[1] != NULL)
 	{
-		pf(STDERR_FILENO, "%s: %d: cannot open %s: No such file\n", Name, 0, argv[1]);
+		pf(2, "%s: %d: cannot open %s: No such file\n", Name, 0, argv[1]);
 		exit(EXIT_SUCCESS);
 	}
 
@@ -41,5 +41,5 @@ int main(int argc, char **argv)
 		B_exc(argc, Name, cmd, av, environ);
 	}
 
-	return 0;
+	return (0);
 }

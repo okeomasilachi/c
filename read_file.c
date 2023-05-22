@@ -1,7 +1,10 @@
 #include "main.h"
 
 /**
- * 
+ * open_file - opens a file for processing
+ * @filename: name of file to open
+ *
+ * Return: the filediscriptor to the opened file
 */
 int open_file(const char *filename)
 {
@@ -14,14 +17,17 @@ int open_file(const char *filename)
 }
 
 /**
- * 
+ * read_lines - reads the lines in a file to a buffer till the EOF characters
+ * @fd: filedecriptor to read form
+ *
+ * Return: returns the chracters read
 */
 char *read_lines(int fd)
 {
 	char *file_contents = NULL, buffer[BUFFER_SIZE];
 	size_t file_size = 0;
 	ssize_t bytes_read;
-	
+
 	bytes_read = read(fd, buffer, sizeof(buffer));
 	while (bytes_read > 0)
 	{
@@ -50,7 +56,10 @@ char *read_lines(int fd)
 }
 
 /**
- * 
+ * read_file - calls all file process in there order
+ * @filename: file to call the processes on
+ *
+ * Return: the characters successfully read
 */
 char *read_file(const char *filename)
 {
@@ -65,7 +74,14 @@ char *read_file(const char *filename)
 }
 
 /**
- * 
+ * file_process - handles all processing that are file realted
+ * @argv: argument varables
+ * @av: parsed commands
+ * @cmd: address to read file contents to
+ * @Name: name of the compiled program
+ * @argc:argument count
+ *
+ * Return:void
 */
 void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 {
