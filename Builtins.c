@@ -19,15 +19,14 @@ void cd_command(char **args, char *NAME, int argc)
 	{
 		ok = _getenv("HOME");
 		chdir(ok);
-		pf(STDOUT_FILENO, "%s\n", ok);
 		return;
 	}
 	if ((i = _strcmp(args[1], "-")) == 0)
 	{
 		old = _getenv("OLDPWD");
-		new = _getenv("PWD");
 		chdir(old);
-		pf(STDOUT_FILENO, "%s\n", old);
+		new = _getenv("PWD");
+		pf(STDOUT_FILENO, "%s\n", new);
 	}
 	else
 	{
@@ -75,7 +74,7 @@ void setenv_command(char **args, char *NAME, int argc)
 	(void)NAME, (void)argc;
 
 	if (args[1] == NULL || args[2] == NULL)
-		pf(STDERR_FILENO, "setenv: missing argument\n");
+		pf(STDERR_FILENO, "Usage: setenv NAME value\n");
 	else
 	{
 		if (_setenv(args[1], args[2], 1) != 0)
@@ -118,7 +117,7 @@ void help_command(char **args,  char *NAME, int argc)
 
 	if (args[1] == NULL)
 	{
-		pf(STDOUT_FILENO, "This is a simple shell program\n");
-		pf(STDOUT_FILENO, "Authors\nEbiri ThankGod, Onyedibia Okeomasilachi.\n");
+		pf(STDOUT_FILENO, "	   	This is a simple shell program\n");
+		pf(STDOUT_FILENO, "Authors: Ebiri ThankGod, Onyedibia Okeomasilachi.\n");
 	}
 }

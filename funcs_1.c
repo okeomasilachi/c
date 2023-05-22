@@ -5,24 +5,23 @@
  *
 */
 void *_memcpy(void *dest, const void *src, size_t n)
-
 {
 	size_t i;
 	unsigned char *destination;
 	const unsigned char *source;
 
 	if (dest == NULL || src == NULL)
-		return NULL;
+		return (NULL);
 
 	destination = (unsigned char *)dest;
 	source = (const unsigned char *)src;
 	if (destination == source)
-		return dest;
+		return (dest);
 
 	for (i = 0; i < n; i++)
 		destination[i] = source[i];
 
-    return dest;
+    return (dest);
 }
 
 
@@ -36,13 +35,13 @@ void *_memmove(void *dest, const void *src, size_t n)
 	size_t i;
 
 	if (dest == NULL || src == NULL)
-		return NULL;
+		return (NULL);
 
 	destination = (unsigned char *)dest;
 	source = (const unsigned char *)src;
 	
 	if (destination == source)
-		return dest;
+		return (dest);
 
 	if (destination < source)
 	{
@@ -54,7 +53,7 @@ void *_memmove(void *dest, const void *src, size_t n)
 		for (i = n; i > 0; i--)
 			destination[i - 1] = source[i - 1];
 	}
-	return dest;
+	return (dest);
 }
 
 
@@ -67,7 +66,7 @@ int _atoi(const char *nptr)
 	int result, sign, i, digit;
 
 	if (nptr == NULL)
-		return 0;
+		return (0);
 	
 	result = 0;
 	sign = 1;
@@ -89,7 +88,7 @@ int _atoi(const char *nptr)
 		result = result * 10 + digit;
 		i++;
 	}
-	return sign * result;
+	return (sign * result);
 }
 
 /**
@@ -102,18 +101,18 @@ void *_realloc(void *ptr, size_t size)
 	if (size == 0)
 	{
 		free(ptr);
-		return NULL;
+		return (NULL);
 	}
 	if (ptr == NULL)
-		return malloc(size);
+		return (malloc(size));
 
 	new_ptr = malloc(size);
 	if (new_ptr == NULL)
-		return NULL;
+		return (NULL);
 
 	_memcpy(new_ptr, ptr, size);
 	free(ptr);
-	return new_ptr;
+	return (new_ptr);
 }
 
 /**

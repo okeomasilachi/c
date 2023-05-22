@@ -52,7 +52,6 @@ struct built_in built_in_commands[] = {
 	{"exit", exit_command},
 	{"setenv", setenv_command},
 	{"unsetenv", unsetenv_command},
-	/*{"alias", parseArs_alias},*/
 	{"help", help_command},
 };
 

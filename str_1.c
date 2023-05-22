@@ -26,16 +26,18 @@ char *_strcat(char *dest, char *src)
  * Return: success (s)
  */
 
-char *_strchr(char *s, char c)
+char *_strchr(const char *s, int c)
 {
-	int i;
+	if (s == NULL)
+		return (NULL);
 
-	for (i = 0; s[i] >= '\0'; i++)
+	while (*s != '\0')
 	{
-		if (s[i] == c)
-			return (s + i);
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
 	}
-	return ('\0');
+	return ((*s == (char)c) ? (char *)s : NULL);
 }
 
 /**
