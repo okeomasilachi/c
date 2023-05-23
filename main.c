@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 
 	if (access(argv[1], F_OK) == 0 && argc == 2)
 	{
+		Name = argv[1];
 		file_process(argv, av, cmd, Name, argc, i);
 	}
 	if (argv[1] != NULL)
@@ -38,9 +39,8 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		i++;
-		cmd = p_Input_2();
-		B_exc(argc, Name, cmd, av, environ, i);
+		cmd = p_Input();
+		B_exc_2(argc, Name, cmd, av, environ, i);
 	}
 
 	return (0);

@@ -1,5 +1,4 @@
 #include "main.h"
-#include "prs.h"
 
 /**
  * prs - parses input command to tokens
@@ -161,9 +160,4 @@ char *_getline(char *buffer, int *buffer_pos, int *buffer_size)
 		line[line_size - 1] = '\0';
 	}
 	return (line);
-}
-
-int performActionAndUpdate(State* state) {
-    
-    return (state->previousValue++);
 }

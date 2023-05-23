@@ -21,9 +21,6 @@ extern char **environ;
 
 /*---------------------------------------------------------------*/
 /* for tokenization of strings */
-typedef struct {
-    int previousValue;
-} State;
 
 /**
  * struct okeoma - structs fro the strtok funtion
@@ -40,14 +37,13 @@ void f_tokenizer(Tokenizer *tokenizer, char *input_string);
 char *s_tok(Tokenizer *tokenizer, const char *delimiters);
 char **prs(char *command, size_t del_n);
 char *p_Input();
-char *p_Input_2();
 /*--------------------------------------------------------------*/
 int open_file(const char *filename);
 char *read_lines(int fd);
 char *read_file(const char *filename);
-void file_process(char **argv, char **av, char *cmd, char *Name, int argc, int ok);
+void file_process(char **argv, char **av, char *cmd, char *N, int a, int ok);
 /*--------------------------------------------------------------*/
-int execute_command(char **args, char **envp, size_t n, char *Name, int argc, int i);
+int execute_command(char **args, char **envp, size_t n, char *N, int a, int i);
 char *find_executable(char *argv);
 /*---------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -91,6 +87,6 @@ void setenv_command(char **args, char *NAME, int argc);
 void unsetenv_command(char **args, char *NAME, int argc);
 void help_command(char **args, char *NAME, int argc);
 int execute_builtin_command(char **args, char *NAME, int argc);
-int performActionAndUpdate(State *state);
+void B_exc_2(int argc, char *Name, char *cmd, char **av, char **env, int ok);
 
 #endif /* MAIN_H */

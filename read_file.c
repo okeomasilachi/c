@@ -78,20 +78,23 @@ char *read_file(const char *filename)
  * @argv: argument varables
  * @av: parsed commands
  * @cmd: address to read file contents to
- * @Name: name of the compiled program
- * @argc:argument count
+ * @N: name of the compiled program
+ * @a:argument count
+ * @i: command number
  *
  * Return:void
 */
-void file_process(char **argv, char **av, char *cmd, char *Name, int argc, int i)
+void file_process(char **argv, char **av, char *cmd, char *N, int a, int i)
 {
 	size_t read;
 
 	cmd = read_file(argv[1]);
 	read = _strlen(cmd);
 	if (read > 0 && cmd[read - 1] == '\n')
+	{
 		cmd[read - 1] = '\0';
+	}
 
-	B_exc(argc, Name, cmd, av, environ, i);
+	B_exc_2(a, N, cmd, av, environ, i);
 	exit(EXIT_SUCCESS);
 }

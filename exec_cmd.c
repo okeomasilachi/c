@@ -3,14 +3,15 @@
 /**
  * B_exc - function handles all command processing
  * @argc: argument count
- * @Name: name of the compiled program [argv[0]]
+ * @N: name of the compiled program [argv[0]]
  * @cmd: commandline input
  * @av: parsed commands
- * @environ: environmental variable
+ * @env: environmental variable
+ * @ok: command number
  *
  * Return: void
 */
-void B_exc(int argc, char *Name, char *cmd, char **av, char **environ, int ok)
+void B_exc(int argc, char *N, char *cmd, char **av, char **env, int ok)
 {
 	int i, status = 0, y = 0;
 	char **command = NULL, *tok;
@@ -26,10 +27,10 @@ void B_exc(int argc, char *Name, char *cmd, char **av, char **environ, int ok)
 		for (i = 0; command[i] != NULL; i++)
 		{
 			av = prs(command[i], 0);
-			status = execute_builtin_command(av, Name, argc);
+			status = execute_builtin_command(av, N, argc);
 			if (status != 0)
 			{
-				status = execute_command(av, environ, 0, Name, argc, ok);
+				status = execute_command(av, env, 0, N, argc, ok);
 			}
 		}
 		if (y == 1)
@@ -100,23 +101,24 @@ char *find_executable(char *argv)
  * @args: commands to be eexcuited;
  * @envp: environmental variable
  * @n: set for executable name [argv[0]]
- * @Name: name of the compiled program
- * @argc: argument count
+ * @N: name of the compiled program
+ * @a: argument count
+ * @i: command number
  *
  * Return: 0 on success
  * error: non zero value
 */
-int execute_command(char **args, char **envp, size_t n, char *Name, int argc, int i)
+int execute_command(char **args, char **envp, size_t n, char *N, int a, int i)
 {
 	char *ec;
 	pid_t child_pid;
 	int status;
 
-	(void)argc;
+	(void)a;
 	ec = find_executable(args[n]);
 	if (!ec)
 	{
-		pf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, i, args[n]);
+		pf(STDERR_FILENO, "%s: %d: %s: not found\n", N, i, args[n]);
 		return (EXIT_FAILURE);
 	}
 
@@ -141,4 +143,53 @@ int execute_command(char **args, char **envp, size_t n, char *Name, int argc, in
 		}
 	}
 	return (-1);
+}
+
+/**
+ * B_exc_2 - function handles all command processing
+ * @argc: argument count
+ * @N: name of the compiled program [argv[0]]
+ * @cmd: commandline input
+ * @av: parsed commands
+ * @env: environmental variable
+ * @ok: command number
+ *
+ * Return: void
+*/
+void B_exc_2(int argc, char *N, char *cmd, char **av, char **env, int ok)
+{
+	int i, status = 0, y = 0;
+	char **command = NULL, *tok;
+	Tokenizer token;
+
+	find_char(cmd, '#');
+	y = findAndSet(cmd, "&&", "||");
+	f_tokenizer(&token, cmd);
+	tok = s_tok(&token, "&&||");
+	while (tok != NULL)
+	{
+		command = prs(tok, 1);
+		for (i = 0; command[i] != NULL; i++)
+		{
+			av = prs(command[i], 0);
+			++ok;
+			status = execute_builtin_command(av, N, argc);
+			if (status != 0)
+			{
+				status = execute_command(av, env, 0, N, argc, ok);
+			}
+		}
+		if (y == 1)
+		{
+			if (status != 0)
+				break;
+		}
+		if (y == 2)
+		{
+			if (status == 0)
+				break;
+		}
+		y = findAndSet(NULL, "&&", "||");
+		tok = s_tok(&token, "&&||");
+	}
 }
