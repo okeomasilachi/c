@@ -83,7 +83,7 @@ char *read_file(const char *filename)
  *
  * Return:void
 */
-void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
+void file_process(char **argv, char **av, char *cmd, char *Name, int argc, int i)
 {
 	size_t read;
 
@@ -92,6 +92,6 @@ void file_process(char **argv, char **av, char *cmd, char *Name, int argc)
 	if (read > 0 && cmd[read - 1] == '\n')
 		cmd[read - 1] = '\0';
 
-	B_exc(argc, Name, cmd, av, environ);
+	B_exc(argc, Name, cmd, av, environ, i);
 	exit(EXIT_SUCCESS);
 }

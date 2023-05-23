@@ -21,6 +21,9 @@ extern char **environ;
 
 /*---------------------------------------------------------------*/
 /* for tokenization of strings */
+typedef struct {
+    int previousValue;
+} State;
 
 /**
  * struct okeoma - structs fro the strtok funtion
@@ -36,34 +39,19 @@ typedef struct okeoma
 void f_tokenizer(Tokenizer *tokenizer, char *input_string);
 char *s_tok(Tokenizer *tokenizer, const char *delimiters);
 char **prs(char *command, size_t del_n);
+char *p_Input();
+char *p_Input_2();
 /*--------------------------------------------------------------*/
 int open_file(const char *filename);
 char *read_lines(int fd);
 char *read_file(const char *filename);
-void file_process(char **argv, char **av, char *cmd, char *Name, int argc);
+void file_process(char **argv, char **av, char *cmd, char *Name, int argc, int ok);
 /*--------------------------------------------------------------*/
-int execute_command(char **args, char **envp, size_t n, char *Name, int argc);
+int execute_command(char **args, char **envp, size_t n, char *Name, int argc, int i);
 char *find_executable(char *argv);
 /*---------------------------------------------------------------*/
-void cd_command(char **args, char *NAME, int argc);
-void exit_command(char **args, char *NAME, int argc);
-void setenv_command(char **args, char *NAME, int argc);
-void unsetenv_command(char **args, char *NAME, int argc);
-void help_command(char **args, char *NAME, int argc);
-int execute_builtin_command(char **args, char *NAME, int argc);
-
-/**
- * struct built_in - struct for built in commands
- * @name: name of the built in command
- * @function: function pointer to the command
-*/
-typedef struct built_in
-{
-	char *name;
-	void (*function)(char **args, char *NAME, int argc);
-} me;
 /*--------------------------------------------------------------------------*/
-void B_exc(int argc, char *Name, char *cmd, char **av, char **environ);
+void B_exc(int argc, char *Name, char *cmd, char **av, char **environ, int ok);
 void read_input(char *buffer, int *buffer_pos, int *buffer_size);
 char *_getline(char *buffer, int *buffer_pos, int *buffer_size);
 /*--------------------------------------------------------------------------*/
@@ -96,6 +84,13 @@ int _strncmp(const char s1[], const char s2[], size_t n);
 size_t _strcspn(const char *s, const char *reject);
 char *_strcpy(char *dest, const char *src);
 int find_char(char *str, char search);
-
+char *_getline(char *buffer, int *buffer_pos, int *buffer_size);
+void cd_command(char **args, char *NAME, int argc);
+void exit_command(char **args, char *NAME, int argc);
+void setenv_command(char **args, char *NAME, int argc);
+void unsetenv_command(char **args, char *NAME, int argc);
+void help_command(char **args, char *NAME, int argc);
+int execute_builtin_command(char **args, char *NAME, int argc);
+int performActionAndUpdate(State *state);
 
 #endif /* MAIN_H */

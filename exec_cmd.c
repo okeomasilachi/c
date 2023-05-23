@@ -10,7 +10,7 @@
  *
  * Return: void
 */
-void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
+void B_exc(int argc, char *Name, char *cmd, char **av, char **environ, int ok)
 {
 	int i, status = 0, y = 0;
 	char **command = NULL, *tok;
@@ -29,7 +29,7 @@ void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 			status = execute_builtin_command(av, Name, argc);
 			if (status != 0)
 			{
-				status = execute_command(av, environ, 0, Name, argc);
+				status = execute_command(av, environ, 0, Name, argc, ok);
 			}
 		}
 		if (y == 1)
@@ -46,7 +46,6 @@ void B_exc(int argc, char *Name, char *cmd, char **av, char **environ)
 		tok = s_tok(&token, "&&||");
 	}
 }
-
 
 /**
  * find_executable - finds the path of an execuitable if it exist
@@ -107,16 +106,17 @@ char *find_executable(char *argv)
  * Return: 0 on success
  * error: non zero value
 */
-int execute_command(char **args, char **envp, size_t n, char *Name, int argc)
+int execute_command(char **args, char **envp, size_t n, char *Name, int argc, int i)
 {
 	char *ec;
 	pid_t child_pid;
 	int status;
 
+	(void)argc;
 	ec = find_executable(args[n]);
 	if (!ec)
 	{
-		pf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, argc, args[n]);
+		pf(STDERR_FILENO, "%s: %d: %s: not found\n", Name, i, args[n]);
 		return (EXIT_FAILURE);
 	}
 

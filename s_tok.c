@@ -63,11 +63,11 @@ char *s_tok(Tokenizer *tokenizer, const char *delimiters)
 */
 int find_char(char *str, char search)
 {
-	char *str_cpy = strchr(str, search);
+	char *str_cpy = _strchr(str, search);
 
 	if (str == NULL || search == '\0')
 	{
-		dprintf(STDERR_FILENO, "find_char: missing arguments");
+		pf(STDERR_FILENO, "find_char: missing arguments");
 		return (-1);
 	}
 

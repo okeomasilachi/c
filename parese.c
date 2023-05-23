@@ -1,4 +1,5 @@
 #include "main.h"
+#include "prs.h"
 
 /**
  * prs - parses input command to tokens
@@ -49,16 +50,8 @@ char **prs(char *command, size_t del_n)
 	return (av);
 }
 
-/**
- * struct me - Built in's of the shell
-*/
-me built_in_commands[] = {
-	{"cd", cd_command},
-	{"exit", exit_command},
-	{"setenv", setenv_command},
-	{"unsetenv", unsetenv_command},
-	{"help", help_command},
-};
+
+
 
 /**
  * execute_builtin_command - this function runs built-in
@@ -71,98 +64,106 @@ me built_in_commands[] = {
 */
 int execute_builtin_command(char **args,  char *NAME, int argc)
 {
+	char *built_in_commands[] = {
+		"cd",
+		"exit",
+		"setenv",
+		"unsetenv",
+		"help"
+	};
 
-	int num_built_in_com = sizeof(built_in_commands) / sizeof(struct built_in), i;
+	void (*built_in_funcs[])(char **, char *, int) = {
+		&cd_command,
+		&exit_command,
+		&setenv_command,
+		&unsetenv_command,
+		&help_command
+	};
+	int num_built_in_com = sizeof(built_in_commands) / sizeof(char *), i;
 
 	for (i = 0; i < num_built_in_com; i++)
 	{
-		if (_strcmp(args[0], built_in_commands[i].name) == 0)
+		if (_strcmp(args[0], built_in_commands[i]) == 0)
 		{
-			built_in_commands[i].function(args, NAME, argc);
+			(*built_in_funcs[i])(args, NAME, argc);
 			return (0); /* Command executed */
 		}
 	}
 	return (1); /* Not a built-in command */
 }
 
-/* Define a global buffer to hold input read from standard input*/
-
-char buffer[BUFFER_SIZE];
-int buffer_pos;
-int buffer_size;
-
 /**
  * read_input - reads input from a buffer
  *
- * Return: read inputs
+ * @buffer: Pointer to the buffer
+ * @buffer_pos: Pointer to the buffer position
+ * @buffer_size: Pointer to the buffer size
+ *
+ * Return: void
  */
-
 void read_input(char *buffer, int *buffer_pos, int *buffer_size)
 {
 	fflush(stdout);
 
-	if (buffer_pos >= buffer_size)
+	if (*buffer_pos >= *buffer_size)
 	{
-		buffer_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
-		if (buffer_size == -1)
+		*buffer_size = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+		if (*buffer_size == -1)
 		{
 			perror("read");
 			exit(EXIT_FAILURE);
 		}
 
-		if (buffer_size == 0)
+		if (*buffer_size == 0)
 		{
 			pf(STDOUT_FILENO, "\n");
 			exit(EXIT_SUCCESS);
 		}
-		buffer_pos = 0;
+		*buffer_pos = 0;
 	}
 }
 
-
 /**
- * _getline - function reads from a buffer
+ * _getline - reads a line from a buffer
  *
- *Return: the charactersread from the buffer
+ * @buffer: Pointer to the buffer
+ * @buffer_pos: Pointer to the buffer position
+ * @buffer_size: Pointer to the buffer size
+ *
+ * Return: Pointer to the read line
  */
-
 char *_getline(char *buffer, int *buffer_pos, int *buffer_size)
 {
 	char *line = NULL;
 	int line_size = 0;
 
-	while (1)
+	while (true)
 	{
-		if (buffer_pos >= buffer_size)
-		{
+		if (*buffer_pos >= *buffer_size)
 			read_input(buffer, buffer_pos, buffer_size);
-		}
 
-		if (buffer[buffer_pos] == '\n')
+		if (buffer[*buffer_pos] == '\n')
 		{
-			buffer_pos++;
-			line = _realloc(line, line_size + buffer_pos);
-			_memcpy(line + line_size, buffer, buffer_pos);
-			line_size += buffer_pos;
+			(*buffer_pos)++;
+			line = _realloc(line, line_size + *buffer_pos);
+			_memcpy(line + line_size, buffer, *buffer_pos);
+			line_size += *buffer_pos;
 			line[line_size - 1] = '\0';
-
 			return (line);
 		}
-		buffer_pos++;
+		(*buffer_pos)++;
 	}
-
 	if (line != NULL)
 	{
-		line = _realloc(line, line_size + buffer_pos);
-		_memcpy(line + line_size, buffer, buffer_pos);
-		line_size += buffer_pos;
+		line = _realloc(line, line_size + *buffer_pos);
+		_memcpy(line + line_size, buffer, *buffer_pos);
+		line_size += *buffer_pos;
 		line[line_size - 1] = '\0';
 	}
-
 	return (line);
 }
 
-char *call()
-{
-
+int performActionAndUpdate(State* state) {
+    
+    return (state->previousValue++);
 }

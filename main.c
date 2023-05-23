@@ -12,11 +12,11 @@ int main(int argc, char **argv)
 {
 	char *cmd = NULL, **av = NULL, *Name = argv[0];
 	bool int_active = isatty(STDIN_FILENO);
-
+	int i = 0;
 
 	if (access(argv[1], F_OK) == 0 && argc == 2)
 	{
-		file_process(argv, av, cmd, Name, argc);
+		file_process(argv, av, cmd, Name, argc, i);
 	}
 	if (argv[1] != NULL)
 	{
@@ -28,17 +28,19 @@ int main(int argc, char **argv)
 	{
 		while (true)
 		{
+			i++;
 			pf(STDOUT_FILENO, "($) ");
-			cmd = _getline();
-			B_exc(argc, Name, cmd, av, environ);
+			cmd = p_Input();
+			B_exc(argc, Name, cmd, av, environ, i);
 		}
 		_free(3, cmd, Name, av);
 		exit(EXIT_SUCCESS);
 	}
 	else
 	{
-		cmd = _getline();
-		B_exc(argc, Name, cmd, av, environ);
+		i++;
+		cmd = p_Input_2();
+		B_exc(argc, Name, cmd, av, environ, i);
 	}
 
 	return (0);
