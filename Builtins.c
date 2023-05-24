@@ -131,7 +131,7 @@ void help_command(char **args,  char *NAME, int num)
 
 	if (args[1] == NULL)
 	{
-		pf(STDOUT_FILENO, "		This is a simple shell program\n");
-		pf(STDOUT_FILENO, "Authors: Ebiri ThankGod, Onyedibia Okeomasilachi.\n");
+		pf(STDOUT_FILENO, "	This is a simple shell program\n");
+		pf(STDOUT_FILENO, "\nAuthors: Ebiri ThankGod, Onyedibia Okeomasilachi.\n");
 	}
 }
