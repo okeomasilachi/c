@@ -56,12 +56,12 @@ char **prs(char *command, size_t del_n)
  * execute_builtin_command - this function runs built-in
  * @args: arguments to pass to the command
  * @NAME: name of the compiled program
- * @argc: argument count
+ * @num: argument count
  *
  * Return: 0 on success
  * error: 1 on error
 */
-int execute_builtin_command(char **args,  char *NAME, int argc)
+int execute_builtin_command(char **args,  char *NAME, int num)
 {
 	char *built_in_commands[] = {
 		"cd",
@@ -84,7 +84,7 @@ int execute_builtin_command(char **args,  char *NAME, int argc)
 	{
 		if (_strcmp(args[0], built_in_commands[i]) == 0)
 		{
-			(*built_in_funcs[i])(args, NAME, argc);
+			(*built_in_funcs[i])(args, NAME, num);
 			return (0); /* Command executed */
 		}
 	}

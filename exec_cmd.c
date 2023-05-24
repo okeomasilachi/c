@@ -27,7 +27,7 @@ void B_exc(int argc, char *N, char *cmd, char **av, char **env, int ok)
 		for (i = 0; command[i] != NULL; i++)
 		{
 			av = prs(command[i], 0);
-			status = execute_builtin_command(av, N, argc);
+			status = execute_builtin_command(av, N, ok);
 			if (status != 0)
 			{
 				status = execute_command(av, env, 0, N, argc, ok);
@@ -173,7 +173,7 @@ void B_exc_2(int argc, char *N, char *cmd, char **av, char **env, int ok)
 		{
 			av = prs(command[i], 0);
 			++ok;
-			status = execute_builtin_command(av, N, argc);
+			status = execute_builtin_command(av, N, ok);
 			if (status != 0)
 			{
 				status = execute_command(av, env, 0, N, argc, ok);

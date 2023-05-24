@@ -81,12 +81,12 @@ size_t _strcspn(const char *s, const char *reject);
 char *_strcpy(char *dest, const char *src);
 int find_char(char *str, char search);
 char *_getline(char *buffer, int *buffer_pos, int *buffer_size);
-void cd_command(char **args, char *NAME, int argc);
-void exit_command(char **args, char *NAME, int argc);
-void setenv_command(char **args, char *NAME, int argc);
-void unsetenv_command(char **args, char *NAME, int argc);
-void help_command(char **args, char *NAME, int argc);
-int execute_builtin_command(char **args, char *NAME, int argc);
+void cd_command(char **args, char *NAME, int num);
+void exit_command(char **args, char *NAME, int num);
+void setenv_command(char **args, char *NAME, int num);
+void unsetenv_command(char **args, char *NAME, int num);
+void help_command(char **args, char *NAME, int num);
+int execute_builtin_command(char **args, char *NAME, int num);
 void B_exc_2(int argc, char *Name, char *cmd, char **av, char **env, int ok);
 
 #endif /* MAIN_H */
